@@ -124,38 +124,43 @@
         <div class="win-chart-wrap" role="img" aria-label="Animated graph of Goodyear earnings climbing from a 38 million dollar loss to over 1 billion dollars">
           <svg class="win-chart" viewBox="0 0 1200 520" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="winGrad" gradientUnits="userSpaceOnUse" x1="30" y1="455" x2="1140" y2="48">
+              <linearGradient id="winGrad" gradientUnits="userSpaceOnUse" x1="30" y1="462" x2="1140" y2="44">
                 <stop offset="0" stop-color="#B56CD2"/>
                 <stop offset="0.55" stop-color="#6C93BC"/>
                 <stop offset="1" stop-color="#8FF0DC"/>
               </linearGradient>
               <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#8FA0DC" stop-opacity="0.20"/>
+                <stop offset="0" stop-color="#8FA0DC" stop-opacity="0.22"/>
                 <stop offset="1" stop-color="#8FA0DC" stop-opacity="0"/>
               </linearGradient>
               <clipPath id="drawClip"><rect id="draw-clip-rect" x="0" y="0" width="1200" height="520"/></clipPath>
             </defs>
 
+            <rect class="wc-losszone" x="30" y="400" width="1140" height="112"/>
             <g class="wc-grid">
               <line x1="30" y1="100" x2="1170" y2="100"/>
               <line x1="30" y1="200" x2="1170" y2="200"/>
               <line x1="30" y1="300" x2="1170" y2="300"/>
             </g>
             <g class="wc-zero">
-              <line x1="30" y1="400" x2="1170" y2="400"/>
+              <line id="win-zero-line" x1="30" y1="400" x2="1170" y2="400"/>
               <text x="30" y="388">$0</text>
             </g>
 
             <g clip-path="url(#drawClip)">
-              <path class="wc-area" d="M 30 455 C 140 452 220 430 300 398 C 380 366 420 380 500 352 C 580 324 620 336 700 296 C 780 256 830 250 900 200 C 970 150 1030 100 1140 48 L 1140 520 L 30 520 Z"/>
+              <path class="wc-area" d="M 30 462 L 95 448 L 150 458 L 215 430 L 270 438 L 330 408 L 390 378 L 445 392 L 505 342 L 560 356 L 620 300 L 675 318 L 735 252 L 790 270 L 850 196 L 905 214 L 960 140 L 1015 92 L 1075 108 L 1140 44 L 1140 520 L 30 520 Z"/>
             </g>
-            <path class="wc-line" id="win-path" d="M 30 455 C 140 452 220 430 300 398 C 380 366 420 380 500 352 C 580 324 620 336 700 296 C 780 256 830 250 900 200 C 970 150 1030 100 1140 48"/>
+            <line id="win-scan" x1="1140" y1="34" x2="1140" y2="486" opacity="0"/>
+            <path class="wc-trail" id="win-trail" d="M 30 462 L 95 448 L 150 458 L 215 430 L 270 438 L 330 408 L 390 378 L 445 392 L 505 342 L 560 356 L 620 300 L 675 318 L 735 252 L 790 270 L 850 196 L 905 214 L 960 140 L 1015 92 L 1075 108 L 1140 44"/>
+            <path class="wc-line" id="win-path" d="M 30 462 L 95 448 L 150 458 L 215 430 L 270 438 L 330 408 L 390 378 L 445 392 L 505 342 L 560 356 L 620 300 L 675 318 L 735 252 L 790 270 L 850 196 L 905 214 L 960 140 L 1015 92 L 1075 108 L 1140 44"/>
 
             <g class="wc-start">
-              <circle cx="30" cy="455" r="7"/>
-              <text x="48" y="482">-$38M</text>
+              <circle cx="30" cy="462" r="7"/>
+              <text x="48" y="488">-$38M</text>
             </g>
-            <circle class="wc-dot" id="win-dot" cx="1140" cy="48" r="10"/>
+            <circle id="win-ring" cx="1140" cy="44" r="12" opacity="0"/>
+            <g id="win-bursts"></g>
+            <circle class="wc-dot" id="win-dot" cx="1140" cy="44" r="10"/>
           </svg>
           <div class="chart-callout" aria-hidden="true">
             <p class="board-value is-positive" id="score-dial">$1B+</p>

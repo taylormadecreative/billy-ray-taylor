@@ -195,53 +195,111 @@
     }
   }
 
-  /* Win chart: the line draws itself up to $1B+ while the counter climbs.
-     Default markup is the COMPLETE chart, so reduced-motion and no-JS see the
-     finished graphic; start states are applied only when the animation runs. */
+  /* Win chart: a volatile line fights out of the loss zone, bursts through $0,
+     and slams into $1B+ with a flash. Default markup is the COMPLETE chart, so
+     reduced-motion and no-JS see the finished graphic; start states are applied
+     only when the animation will run, with a DOM-write watchdog as backstop. */
   var dial = document.getElementById("score-dial");
   var winPath = document.getElementById("win-path");
+  var winTrail = document.getElementById("win-trail");
   var winDot = document.getElementById("win-dot");
+  var winScan = document.getElementById("win-scan");
+  var winRing = document.getElementById("win-ring");
+  var winZero = document.getElementById("win-zero-line");
+  var burstLayer = document.getElementById("win-bursts");
   var clipRect = document.getElementById("draw-clip-rect");
   if (dial && winPath && winDot && clipRect) {
     var pathLen = winPath.getTotalLength();
-    winPath.style.strokeDasharray = pathLen;
-    winPath.style.strokeDashoffset = pathLen;
+    [winPath, winTrail].forEach(function (p) {
+      p.style.strokeDasharray = pathLen;
+      p.style.strokeDashoffset = pathLen;
+    });
     clipRect.setAttribute("width", "0");
     winDot.setAttribute("opacity", "0");
     dial.classList.remove("is-positive");
     dial.textContent = "-$38M";
+
+    /* find where the line first breaks above $0 (y=400) */
+    var zeroLen = 0;
+    for (var l = 0; l <= pathLen; l += 4) {
+      if (winPath.getPointAtLength(l).y <= 400) { zeroLen = l; break; }
+    }
+
+    var SVGNS = "http://www.w3.org/2000/svg";
+    function burst(x, y, colors, count, spread) {
+      for (var k = 0; k < count; k++) {
+        var node = document.createElementNS(SVGNS, k % 3 ? "rect" : "circle");
+        if (k % 3) {
+          node.setAttribute("width", 7); node.setAttribute("height", 7);
+          node.setAttribute("x", x - 3.5); node.setAttribute("y", y - 3.5);
+        } else {
+          node.setAttribute("r", 4); node.setAttribute("cx", x); node.setAttribute("cy", y);
+        }
+        node.setAttribute("fill", colors[k % colors.length]);
+        burstLayer.appendChild(node);
+        var ang = Math.random() * Math.PI * 2;
+        var dist = spread * (0.4 + Math.random() * 0.6);
+        gsap.fromTo(node, { opacity: 1, scale: 1, transformOrigin: "center" }, {
+          x: Math.cos(ang) * dist,
+          y: Math.sin(ang) * dist * 0.8 - spread * 0.25,
+          rotation: Math.random() * 260 - 130,
+          opacity: 0,
+          scale: 0.4,
+          duration: 0.9 + Math.random() * 0.6,
+          ease: "power2.out",
+          onComplete: function () { node.remove(); }
+        });
+      }
+    }
 
     function fmt(v) {
       if (v < 0) return "-$" + Math.abs(Math.round(v)) + "M";
       if (v < 1000) return "$" + Math.round(v) + "M";
       return "$1B+";
     }
+
     var state = { p: 0 };
+    var zeroFired = false;
     var chartTween = gsap.to(state, {
       p: 1,
-      duration: 2.8,
+      duration: 3.2,
       ease: "power2.inOut",
       scrollTrigger: { trigger: ".win-chart-wrap", start: "top 72%", once: true },
       onUpdate: function () {
         var p = state.p;
-        winPath.style.strokeDashoffset = pathLen * (1 - p);
-        var pt = winPath.getPointAtLength(pathLen * p);
+        var head = pathLen * p;
+        winPath.style.strokeDashoffset = pathLen - head;
+        winTrail.style.strokeDashoffset = pathLen - head;
+        var pt = winPath.getPointAtLength(head);
         winDot.setAttribute("cx", pt.x);
         winDot.setAttribute("cy", pt.y);
         winDot.setAttribute("opacity", p > 0.02 ? "1" : "0");
-        clipRect.setAttribute("width", String(30 + (1170 - 30) * p));
+        winScan.setAttribute("x1", pt.x);
+        winScan.setAttribute("x2", pt.x);
+        winScan.setAttribute("opacity", p > 0.02 && p < 0.985 ? "1" : "0");
+        clipRect.setAttribute("width", String(pt.x));
         var v = -38 + 1038 * p;
         dial.textContent = fmt(v);
-        dial.classList.toggle("is-positive", v >= 1000);
+        dial.classList.toggle("is-positive", v >= 0);
+        if (!zeroFired && head >= zeroLen && zeroLen > 0) {
+          zeroFired = true;
+          burst(pt.x, 400, ["#B56CD2", "#8FF0DC"], 10, 70);
+          gsap.fromTo(winZero, { attr: { "stroke-width": 3 }, opacity: 1 },
+            { attr: { "stroke-width": 1.5 }, opacity: 0.8, duration: 0.9, ease: "power2.out" });
+        }
       },
       onComplete: function () {
-        gsap.fromTo(dial, { scale: 1.08 }, { scale: 1, duration: 0.5, ease: "power2.out" });
-        gsap.fromTo(winDot, { attr: { r: 15 } }, { attr: { r: 10 }, duration: 0.6, ease: "power2.out" });
+        burst(1140, 44, ["#8FF0DC", "#B56CD2", "#ECE9E0"], 18, 120);
+        gsap.fromTo(winRing, { attr: { r: 12 }, opacity: 0.9 },
+          { attr: { r: 110 }, opacity: 0, duration: 0.9, ease: "power2.out" });
+        gsap.fromTo(dial, { scale: 1.1 }, { scale: 1, duration: 0.5, ease: "power2.out" });
+        gsap.fromTo(".win-chart-wrap", { scale: 1.012, transformOrigin: "50% 60%" },
+          { scale: 1, duration: 0.6, ease: "power2.out" });
+        gsap.to(winDot, { attr: { r: 12.5 }, duration: 1.1, repeat: -1, yoyo: true, ease: "sine.inOut" });
       }
     });
 
-    /* Watchdog: if the trigger never fires while the chart is on screen, snap to
-       the finished graphic with plain DOM writes so it can never sit invisible. */
+    /* Watchdog: never let the chart sit invisible if the trigger cannot fire. */
     setInterval(function () {
       if (state.p > 0) return;
       var r = document.querySelector(".win-chart-wrap").getBoundingClientRect();
@@ -249,10 +307,11 @@
         if (chartTween.progress() > 0) return;
         chartTween.kill();
         winPath.style.strokeDashoffset = "0";
+        winTrail.style.strokeDashoffset = "0";
         clipRect.setAttribute("width", "1170");
         winDot.setAttribute("opacity", "1");
         winDot.setAttribute("cx", "1140");
-        winDot.setAttribute("cy", "48");
+        winDot.setAttribute("cy", "44");
         dial.textContent = "$1B+";
         dial.classList.add("is-positive");
         state.p = 1;

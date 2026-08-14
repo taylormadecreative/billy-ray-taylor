@@ -550,12 +550,34 @@ button:focus-visible {
 }
 .wc-start text { fill: var(--purple); font-size: 21px; }
 .wc-start circle { fill: var(--purple); }
+.wc-losszone { fill: rgba(117, 42, 147, 0.12); }
 .wc-area { fill: url(#areaGrad); }
+.wc-trail {
+  fill: none;
+  stroke: url(#winGrad);
+  stroke-width: 20;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.16;
+  filter: blur(6px);
+}
+#win-scan {
+  stroke: rgba(143, 240, 220, 0.35);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 6;
+}
+#win-ring {
+  fill: none;
+  stroke: var(--mint);
+  stroke-width: 3;
+}
+#win-bursts rect, #win-bursts circle { will-change: transform; }
 .wc-line {
   fill: none;
   stroke: url(#winGrad);
-  stroke-width: 7;
+  stroke-width: 8;
   stroke-linecap: round;
+  stroke-linejoin: round;
   filter:
     drop-shadow(0 0 10px rgba(143, 240, 220, 0.45))
     drop-shadow(0 0 30px rgba(181, 108, 210, 0.35));
@@ -640,9 +662,10 @@ button:focus-visible {
 .keynote-pin h2.kn-title {
   margin-bottom: 1.2rem;
 }
-.kn-title span { display: block; line-height: 0.84; }
+.kn-title span { display: block; line-height: 0.9; }
+.kn-title .kn-l1 { margin-bottom: 0.22em; }
 .kn-title .kn-l1 {
-  font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+  font-size: clamp(2.4rem, 4.2vw, 4rem);
   color: transparent;
   -webkit-text-stroke: 2px var(--txt-on-ink);
   text-stroke: 2px var(--txt-on-ink);
