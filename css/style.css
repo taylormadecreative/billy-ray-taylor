@@ -143,15 +143,15 @@ section { scroll-margin-top: 6rem; }
 
 .btn-coral { background: var(--coral); color: var(--ink); }
 .btn-ink { background: var(--ink); color: var(--txt-on-ink); }
-.btn-ghost-ink { background: transparent; color: var(--ink); border-color: rgba(8, 18, 30, 0.35); }
-.btn-ghost-paper { background: transparent; color: var(--txt-on-ink); border-color: rgba(239, 236, 226, 0.4); }
+.btn-ghost-ink { background: transparent; color: var(--ink); border-color: rgba(1, 15, 29, 0.35); }
+.btn-ghost-paper { background: transparent; color: var(--txt-on-ink); border-color: rgba(236, 233, 224, 0.4); }
 .btn-purple { background: var(--purple); color: var(--ink); }
 
 @media (hover: hover) and (pointer: fine) {
   .btn-coral:hover { background: var(--coral-hover); }
   .btn-ink:hover { background: var(--ink-3); }
-  .btn-ghost-ink:hover { border-color: var(--ink); background: rgba(8, 18, 30, 0.05); }
-  .btn-ghost-paper:hover { border-color: var(--txt-on-ink); background: rgba(239, 236, 226, 0.08); }
+  .btn-ghost-ink:hover { border-color: var(--ink); background: rgba(1, 15, 29, 0.05); }
+  .btn-ghost-paper:hover { border-color: var(--txt-on-ink); background: rgba(236, 233, 224, 0.08); }
   .btn-purple:hover { background: var(--purple-hover); }
 }
 
@@ -182,8 +182,8 @@ button:focus-visible {
   gap: 1.5rem;
 }
 .nav.scrolled {
-  background: rgba(244, 241, 232, 0.96);
-  box-shadow: 0 1px 0 rgba(8, 18, 30, 0.08), 0 12px 32px -18px rgba(8, 18, 30, 0.25);
+  background: rgba(251, 251, 249, 0.96);
+  box-shadow: 0 1px 0 rgba(1, 15, 29, 0.08), 0 12px 32px -18px rgba(1, 15, 29, 0.25);
 }
 .nav-brand {
   font-family: var(--font-display);
@@ -309,7 +309,7 @@ button:focus-visible {
   width: min(84%, 26rem);
   height: 78%;
   background:
-    radial-gradient(circle at 1.5px 1.5px, rgba(8, 18, 30, 0.13) 1.5px, transparent 0) 0 0 / 14px 14px,
+    radial-gradient(circle at 1.5px 1.5px, rgba(1, 15, 29, 0.13) 1.5px, transparent 0) 0 0 / 14px 14px,
     var(--coral);
   border-radius: 999px 999px 28px 28px;
 }
@@ -326,7 +326,7 @@ button:focus-visible {
   position: relative;
   z-index: 2;
   width: min(96%, 27.5rem);
-  filter: drop-shadow(0 24px 44px rgba(8, 18, 30, 0.32));
+  filter: drop-shadow(0 24px 44px rgba(1, 15, 29, 0.32));
 }
 
 @media (max-width: 960px) {
@@ -413,7 +413,7 @@ button:focus-visible {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 1px 1px, rgba(239, 236, 226, 0.05) 1px, transparent 0) 0 0 / 12px 12px;
+  background: radial-gradient(circle at 1px 1px, rgba(236, 233, 224, 0.05) 1px, transparent 0) 0 0 / 12px 12px;
   pointer-events: none;
 }
 .scoreboard-label {
@@ -518,7 +518,7 @@ button:focus-visible {
 .keynote-list ul { list-style: none; }
 .keynote-list li {
   padding: 1.1rem 0 1.1rem 1.9rem;
-  border-top: 1px solid rgba(239, 236, 226, 0.14);
+  border-top: 1px solid rgba(236, 233, 224, 0.14);
   position: relative;
   color: var(--txt-on-ink-muted);
   max-width: 62ch;
@@ -643,7 +643,7 @@ button:focus-visible {
   border-radius: 28px;
   overflow: hidden;
   background: var(--ink);
-  box-shadow: 0 32px 80px -32px rgba(8, 18, 30, 0.5);
+  box-shadow: 0 32px 80px -32px rgba(1, 15, 29, 0.5);
 }
 .video-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
 .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -653,7 +653,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to top, rgba(8, 18, 30, 0.55), rgba(8, 18, 30, 0.05) 55%);
+  background: linear-gradient(to top, rgba(1, 15, 29, 0.55), rgba(1, 15, 29, 0.05) 55%);
   border: 0;
   cursor: pointer;
   width: 100%;
@@ -742,7 +742,7 @@ button:focus-visible {
   width: 3.25rem;
   height: 3.25rem;
   border-radius: 50%;
-  border: 2px solid rgba(239, 236, 226, 0.35);
+  border: 2px solid rgba(236, 233, 224, 0.35);
   background: transparent;
   color: var(--txt-on-ink);
   cursor: pointer;
@@ -820,7 +820,7 @@ button:focus-visible {
   background: #FFFFFF;
   border-radius: 28px;
   padding: clamp(1.5rem, 3vw, 2.75rem);
-  box-shadow: 0 32px 72px -30px rgba(8, 18, 30, 0.35);
+  box-shadow: 0 32px 72px -30px rgba(1, 15, 29, 0.35);
   rotate: 2deg;
 }
 .book-shot img { width: 100%; }
@@ -949,13 +949,13 @@ button:focus-visible {
   justify-content: space-between;
   gap: 1rem;
   padding: 1.3rem 0.4rem;
-  border-top: 1px solid rgba(8, 18, 30, 0.16);
+  border-top: 1px solid rgba(1, 15, 29, 0.16);
   color: var(--txt);
   font-weight: 700;
   font-size: 1.15rem;
   transition: color 200ms ease, padding-left 250ms var(--ease-out);
 }
-.dl-list li:last-child a { border-bottom: 1px solid rgba(8, 18, 30, 0.16); }
+.dl-list li:last-child a { border-bottom: 1px solid rgba(1, 15, 29, 0.16); }
 .dl-list a svg { width: 1.2rem; flex: none; fill: currentColor; transition: transform 250ms var(--ease-out); }
 @media (hover: hover) and (pointer: fine) {
   .dl-list a:hover { color: var(--coral-deep); padding-left: 0.9rem; }
@@ -1001,7 +1001,7 @@ button:focus-visible {
 
 .book-billy {
   background:
-    radial-gradient(circle at 2px 2px, rgba(8, 18, 30, 0.08) 2px, transparent 0) 0 0 / 22px 22px,
+    radial-gradient(circle at 2px 2px, rgba(1, 15, 29, 0.08) 2px, transparent 0) 0 0 / 22px 22px,
     var(--coral);
   padding: clamp(6.5rem, 12vw, 11rem) 0;
   text-align: center;
@@ -1013,7 +1013,7 @@ button:focus-visible {
 }
 .book-billy p {
   font-size: var(--size-body-lg);
-  color: rgba(8, 18, 30, 0.78);
+  color: rgba(1, 15, 29, 0.78);
   font-weight: 500;
   max-width: 44rem;
   margin: 0 auto 2.6rem;
@@ -1027,7 +1027,7 @@ button:focus-visible {
 }
 .book-billy-email {
   font-weight: 500;
-  color: rgba(8, 18, 30, 0.78);
+  color: rgba(1, 15, 29, 0.78);
   margin-bottom: 2rem;
 }
 .book-billy-email a {
@@ -1082,7 +1082,7 @@ button:focus-visible {
 }
 .footer-contact { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.95rem; }
 .footer-legal {
-  border-top: 1px solid rgba(239, 236, 226, 0.12);
+  border-top: 1px solid rgba(236, 233, 224, 0.12);
   padding-top: 1.6rem;
   font-size: 0.85rem;
   display: flex;
