@@ -69,20 +69,16 @@
 
     <!-- Attention -->
     <section class="hero">
-      <div class="container hero-grid">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero-inner">
         <div class="hero-copy">
           <p class="eyebrow" data-hero>Global Keynote Speaker · Author of The Winning Link · Founder of LinkedXL</p>
-          <h1 class="display" data-hero>Winning isn't luck.<br>It's <span class="hit">a system.</span></h1>
+          <h1 class="display" data-hero><span class="l1">Winning isn't luck.</span><span class="l2">It's a system.</span></h1>
           <p class="hero-sub" data-hero>Billy Ray Taylor helped swing Goodyear's earnings from a <strong>$38 million loss to over $1 billion</strong>. Now he brings the playbook, and the energy, to your stage.</p>
           <div class="hero-ctas" data-hero>
             <a class="btn btn-accent" href="#book-billy">Book Billy to Speak</a>
-            <a class="btn btn-ghost-ink" href="#watch">Watch the Video</a>
+            <a class="btn btn-ghost-paper" href="#watch">Watch the Video</a>
           </div>
-        </div>
-        <div class="hero-stage">
-          <div class="hero-arch" data-hero-arch></div>
-          <div class="hero-ring" data-hero-arch></div>
-          <img class="hero-billy" data-hero-billy width="726" height="1302" src="assets/Billy-Taylor-066-copy-min.png" alt="Billy Ray Taylor mid-keynote, reaching toward the audience with a huge grin" fetchpriority="high">
         </div>
       </div>
     </section>
@@ -194,13 +190,19 @@
       </div>
     </section>
 
-    <!-- Desire: video -->
+    <!-- Desire: the stage -->
     <section class="watch" id="watch">
-      <div class="container">
-        <h2 class="display" data-reveal>See the energy <span class="hit">for yourself</span></h2>
-        <p class="watch-lede" data-reveal>Audiences call him inspiring, powerful, and moving. Press play and see why.</p>
-        <div class="video-frame" data-sf>
-          <img src="assets/reel-thumb.jpg" width="1280" height="720" alt="Billy Ray Taylor on camera in the BT Expressed studio" loading="lazy">
+      <h2 class="visually-hidden">Watch Billy in action</h2>
+      <div class="stage">
+        <img class="stage-layer stage-bg" src="assets/billy-stage.png" alt="Billy Ray Taylor walking the stage under a spotlight in front of an audience" width="1344" height="752">
+        <div class="stage-type" data-stage-type aria-hidden="true">
+          <span class="st-out st-wide">Watch</span>
+          <span class="st-solid">Billy Ray Taylor</span>
+          <span class="st-out">In Action</span>
+        </div>
+        <img class="stage-layer stage-cut" src="assets/billy-stage-cutout.png" alt="" aria-hidden="true" width="1344" height="752">
+        <div class="stage-ui">
+          <p class="stage-lede">Audiences call him inspiring, powerful, and moving.</p>
           <button class="video-play" type="button" data-video="QiXwkvEb6cE" aria-label="Play the video">
             <span class="play-disc" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9V3z"/></svg>

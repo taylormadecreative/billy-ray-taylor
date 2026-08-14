@@ -91,12 +91,13 @@
   if (playBtn) {
     playBtn.addEventListener("click", function () {
       var id = playBtn.dataset.video;
-      var frame = playBtn.closest(".video-frame");
+      var frame = playBtn.closest(".stage");
       var iframe = document.createElement("iframe");
       iframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
       iframe.title = "Billy Ray Taylor video";
       iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
       iframe.allowFullscreen = true;
+      iframe.className = "stage-frame";
       frame.appendChild(iframe);
       playBtn.remove();
     });
@@ -111,11 +112,32 @@
   document.documentElement.classList.add("gsap-ready");
 
   /* Hero entrance: staggered copy, arch grows, Billy rises */
-  var heroTl = gsap.timeline({ defaults: { ease: "power4.out" } });
-  heroTl
-    .from("[data-hero-arch]", { scale: 0.82, opacity: 0, transformOrigin: "50% 100%", duration: 0.9, stagger: 0.08 })
-    .from("[data-hero-billy]", { y: 70, opacity: 0, duration: 1.0 }, "-=0.55")
-    .from("[data-hero]", { y: 26, opacity: 0, duration: 0.8, stagger: 0.09 }, "-=0.75");
+  gsap.timeline({ defaults: { ease: "power4.out" } })
+    .from(".hero-bg", { scale: 1.08, opacity: 0, duration: 1.4, ease: "power2.out" })
+    .from("[data-hero]", { y: 30, opacity: 0, duration: 0.85, stagger: 0.1 }, "-=1.0");
+
+  /* Stage: the headline drifts up behind Billy as you scroll, so he masks it */
+  var stageType = document.querySelector("[data-stage-type]");
+  if (stageType) {
+    gsap.fromTo(stageType,
+      { yPercent: 14, scale: 0.94 },
+      {
+        yPercent: -12,
+        scale: 1.06,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".stage",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.6
+        }
+      });
+    gsap.from(".stage-cut", {
+      yPercent: 6,
+      ease: "none",
+      scrollTrigger: { trigger: ".stage", start: "top bottom", end: "bottom top", scrub: 1.1 }
+    });
+  }
 
   /* Reveals */
   gsap.utils.toArray("[data-reveal]").forEach(function (el) {
