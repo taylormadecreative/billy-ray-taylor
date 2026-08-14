@@ -379,7 +379,7 @@ button:focus-visible {
   position: absolute;
   /* anchored to the CONTAINER edge, not the viewport, so his reaching hand
      overlaps the tail of the headline by the same amount at every width */
-  right: max(1rem, calc((100vw - var(--container)) / 2 + 18.5rem));
+  right: max(1rem, calc((100vw - min(100vw, var(--container))) / 2 + clamp(9rem, 46rem - 26vw, 18.5rem)));
   bottom: 0;
   /* size against the space BELOW the fixed chrome, never the whole section,
      or his head ends up behind the nav */
@@ -404,11 +404,11 @@ button:focus-visible {
   text-transform: uppercase;
   color: var(--purple);
   margin-bottom: 1.4rem;
-  max-width: 30rem;
+  max-width: 44rem;
   text-shadow: 0 1px 10px rgba(1, 15, 29, 0.95);
 }
 .hero h1 {
-  font-size: clamp(2.9rem, 5.6vw, 5.4rem);
+  font-size: clamp(2.9rem, 5.6vw, 5.8rem);
   margin-bottom: 1.7rem;
 }
 .hero h1 span { display: block; }
@@ -642,8 +642,27 @@ button:focus-visible {
   margin: 2.6rem 0 0;
   border-radius: 20px;
   overflow: hidden;
-  max-width: 21rem;
   box-shadow: 0 26px 60px -26px rgba(1, 15, 29, 0.9);
+}
+.keynote-links {
+  margin-top: 2.4rem;
+  width: 100%;
+}
+.keynote-links svg { width: 100%; height: auto; display: block; }
+.keynote-links .lk-a {
+  stroke: var(--purple);
+  filter: drop-shadow(0 0 14px rgba(181, 108, 210, 0.55));
+}
+.keynote-links .lk-b {
+  stroke: var(--mint);
+  filter: drop-shadow(0 0 14px rgba(143, 240, 220, 0.4));
+}
+.keynote-links .lk-label {
+  fill: var(--txt-on-ink-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
 }
 .keynote-figure img { width: 100%; height: auto; display: block; }
 @media (max-width: 960px) {
