@@ -522,7 +522,9 @@ button:focus-visible {
 }
 .keynote-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  /* minmax(0,..) on the right column: fr will not shrink below min-content, and
+     the accordion's no-wrap titles otherwise crush the left column to ~150px */
+  grid-template-columns: minmax(17rem, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(2.5rem, 5vw, 5rem);
   align-items: start;
 }
@@ -551,8 +553,14 @@ button:focus-visible {
   margin-bottom: 2.2rem;
 }
 .keynote-pin .keynote-book a { color: var(--teal); font-weight: 700; }
-.keynote-ctas { display: flex; flex-direction: column; align-items: flex-start; gap: 0.9rem; }
-.keynote-ctas .btn { white-space: nowrap; }
+.keynote-ctas {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.9rem;
+  max-width: 21rem;
+}
+.keynote-ctas .btn { justify-content: center; text-align: center; }
 
 .keynote-body p {
   font-size: var(--size-body-lg);
@@ -804,7 +812,7 @@ button:focus-visible {
 .about { padding: clamp(6rem, 11vw, 10rem) 0; }
 .about-grid {
   display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   gap: clamp(2.5rem, 5vw, 5rem);
   align-items: center;
 }
@@ -930,7 +938,7 @@ button:focus-visible {
 .book { padding: clamp(6rem, 11vw, 10rem) 0; }
 .book-grid {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(2.5rem, 5vw, 5rem);
   align-items: center;
 }
@@ -970,7 +978,7 @@ button:focus-visible {
 }
 .podcast-grid {
   display: grid;
-  grid-template-columns: 1fr 1.05fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: clamp(2.5rem, 5vw, 5rem);
   align-items: center;
 }
