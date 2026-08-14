@@ -116,62 +116,46 @@
     .from(".hero-bg", { scale: 1.08, opacity: 0, duration: 1.4, ease: "power2.out" })
     .from("[data-hero]", { y: 30, opacity: 0, duration: 0.85, stagger: 0.1 }, "-=1.0");
 
-  /* Stage: the headline drifts up behind Billy as you scroll, so he masks it */
+  /* Stage: Billy walks into the spotlight, then the headline drifts up behind him.
+     Uses set + to (never from) so a trigger that fails to fire can never leave
+     the stage blank; a watchdog force-plays it if ScrollTrigger never runs. */
   var stageType = document.querySelector("[data-stage-type]");
-  if (stageType) {
-    gsap.fromTo(stageType,
-      { yPercent: 14, scale: 0.94 },
-      {
-        yPercent: -12,
-        scale: 1.06,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".stage",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 0.6
-        }
+  var stageBilly = document.querySelector("[data-stage-billy]");
+  if (stageType && stageBilly) {
+    var lines = gsap.utils.toArray(stageType.querySelectorAll("span"));
+
+    gsap.set(stageBilly, { opacity: 0, yPercent: 9, scale: 0.955, transformOrigin: "50% 100%" });
+    gsap.set(lines, { opacity: 0, yPercent: 22 });
+
+    var stageTl = gsap.timeline({
+      scrollTrigger: { trigger: ".stage", start: "top 78%", once: true }
+    })
+      .to(stageBilly, { opacity: 1, yPercent: 0, scale: 1, duration: 1.1, ease: "power3.out" })
+      .to(lines, { opacity: 1, yPercent: 0, duration: 0.85, stagger: 0.09, ease: "power3.out" }, "-=0.72");
+
+    /* Watchdog. If the entrance never ran, reveal it with plain DOM writes rather
+       than GSAP, so a stalled ticker cannot leave the stage blank. */
+    setTimeout(function () {
+      if (stageTl.progress() > 0) return;
+      stageTl.kill();
+      [stageBilly].concat(lines).forEach(function (el) {
+        el.style.opacity = "1";
+        el.style.transform = "none";
       });
-    gsap.from(".stage-cut", {
-      yPercent: 6,
+    }, 4000);
+
+    /* ongoing parallax: the headline rises, Billy holds back, so he keeps masking it */
+    gsap.to(stageType, {
+      yPercent: -13,
       ease: "none",
-      scrollTrigger: { trigger: ".stage", start: "top bottom", end: "bottom top", scrub: 1.1 }
+      scrollTrigger: { trigger: ".stage", start: "top bottom", end: "bottom top", scrub: 0.6 }
+    });
+    gsap.to(stageBilly, {
+      yPercent: 3.5,
+      ease: "none",
+      scrollTrigger: { trigger: ".stage", start: "top bottom", end: "bottom top", scrub: 1.2 }
     });
   }
-
-  /* Reveals */
-  gsap.utils.toArray("[data-reveal]").forEach(function (el) {
-    gsap.from(el, {
-      y: 34,
-      opacity: 0,
-      duration: 0.9,
-      ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 88%" }
-    });
-  });
-
-  /* Scale & Fade: media grows in, dims on the way out */
-  gsap.utils.toArray("[data-sf]").forEach(function (el) {
-    gsap.timeline({
-      scrollTrigger: { trigger: el, start: "top 95%", end: "bottom 5%", scrub: true }
-    })
-      .fromTo(el, { scale: 0.88, opacity: 0.4 }, { scale: 1, opacity: 1, duration: 0.35, ease: "none" })
-      .to(el, { duration: 0.35, ease: "none" })
-      .to(el, { scale: 0.97, opacity: 0.35, duration: 0.3, ease: "none" });
-  });
-
-  /* Pin the keynote title column while the body scrolls (desktop only) */
-  ScrollTrigger.matchMedia({
-    "(min-width: 961px)": function () {
-      ScrollTrigger.create({
-        trigger: ".keynote-grid",
-        pin: ".keynote-pin",
-        start: "top 120px",
-        end: "bottom bottom",
-        pinSpacing: false
-      });
-    }
-  });
 
   /* Scoreboard dial: -$38M rolls up to $1B+ */
   var dial = document.getElementById("score-dial");
