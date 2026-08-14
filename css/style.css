@@ -34,6 +34,7 @@
   --ink-3: #14293C;
   --steel-text: #41678A;
   --purple-hover: #C285DC;
+  --mint: #8FF0DC;
   --txt: #010F1D;
   --txt-muted: #46545F;
   --txt-on-ink: #ECE9E0;
@@ -140,6 +141,21 @@ section { scroll-margin-top: 7.5rem; }
 }
 .wall-violet { --wall-img: url("../assets/wall-violet.jpg"); }
 .wall-spectrum { --wall-img: url("../assets/wall-spectrum.jpg"); }
+.wall-teal { --wall-img: url("../assets/wall-teal.jpg"); }
+/* the teal plate is darker than the violet one, so it carries a lighter scrim
+   and the green actually reads */
+.wall-teal .hit,
+.wall-teal h2 span { color: var(--mint); }
+.wall-teal .dl-list a:hover,
+.wall-teal .news-pub,
+.wall-teal .book-sub { color: var(--mint); }
+
+.wall-teal::after {
+  background: linear-gradient(180deg,
+    rgba(1, 15, 29, 0.88) 0%,
+    rgba(1, 15, 29, 0.70) 42%,
+    rgba(1, 15, 29, 0.88) 100%);
+}
 
 /* ---------- Buttons ---------- */
 
@@ -348,12 +364,14 @@ button:focus-visible {
 /* Billy is his own layer, so he can never be cropped by the frame or the chrome */
 .hero-figure {
   position: absolute;
-  right: clamp(0.5rem, 8vw, 11rem);
+  /* anchored to the CONTAINER edge, not the viewport, so his reaching hand
+     overlaps the tail of the headline by the same amount at every width */
+  right: max(1rem, calc((100vw - var(--container)) / 2 + 7rem));
   bottom: 0;
   /* size against the space BELOW the fixed chrome, never the whole section,
      or his head ends up behind the nav */
   height: min(52rem, calc(100% - var(--chrome-h) - 0.75rem));
-  z-index: -1;
+  z-index: 2;
   will-change: transform;
   pointer-events: none;
 }
@@ -428,7 +446,9 @@ button:focus-visible {
 /* ---------- Trusted-by marquee ---------- */
 
 .trust {
-  background: var(--ink);
+  background:
+    radial-gradient(52rem 22rem at 50% 120%, rgba(72, 167, 155, 0.16), transparent 68%),
+    var(--ink);
   padding: 3.5rem 0 3.75rem;
 }
 .trust-label {
@@ -568,6 +588,8 @@ button:focus-visible {
   gap: clamp(2.5rem, 5vw, 5rem);
   align-items: start;
 }
+.keynote-pin { position: sticky; top: calc(var(--chrome-h) + 2rem); align-self: start; }
+@media (max-width: 960px) { .keynote-pin { position: static; } }
 .keynote-pin .kicker {
   color: var(--teal);
   font-weight: 700;
@@ -593,6 +615,18 @@ button:focus-visible {
   margin-bottom: 2.2rem;
 }
 .keynote-pin .keynote-book a { color: var(--teal); font-weight: 700; }
+.keynote-figure {
+  margin: 2.6rem 0 0;
+  border-radius: 20px;
+  overflow: hidden;
+  max-width: 21rem;
+  box-shadow: 0 26px 60px -26px rgba(1, 15, 29, 0.9);
+}
+.keynote-figure img { width: 100%; height: auto; display: block; }
+@media (max-width: 960px) {
+  .keynote-figure { max-width: 100%; margin-top: 2rem; }
+}
+
 .keynote-ctas {
   display: flex;
   flex-direction: column;
@@ -898,6 +932,7 @@ button:focus-visible {
 .raves {
   background:
     radial-gradient(46rem 32rem at 8% 96%, rgba(117, 42, 147, 0.22), transparent 64%),
+    radial-gradient(40rem 28rem at 92% 6%, rgba(72, 167, 155, 0.20), transparent 62%),
     var(--ink);
   color: var(--txt-on-ink);
   padding: clamp(6rem, 11vw, 10rem) 0;
