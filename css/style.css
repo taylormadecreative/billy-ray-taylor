@@ -1,39 +1,18 @@
 /* Billy Ray Taylor — speaker site
-   Palette: Billy's own LinkedXL brand, committed.
-   Display: Tanker · Body: Satoshi (Fontshare) */
+   Palette: LinkedXL brand, exact.
+   Display: Big Shoulders Display (condensed industrial) · Body: Archivo */
 
 @font-face {
-  font-family: "Tanker";
-  src: url("../assets/fonts/Tanker-400.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Big Shoulders Display";
+  src: url("../assets/fonts/BigShouldersDisplay-var.woff2") format("woff2-variations");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Satoshi";
-  src: url("../assets/fonts/Satoshi-400.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Satoshi";
-  src: url("../assets/fonts/Satoshi-500.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Satoshi";
-  src: url("../assets/fonts/Satoshi-700.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Satoshi";
-  src: url("../assets/fonts/Satoshi-900.woff2") format("woff2");
-  font-weight: 900;
+  font-family: "Archivo";
+  src: url("../assets/fonts/Archivo-var.woff2") format("woff2-variations");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -63,12 +42,12 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-  --font-display: "Tanker", "Arial Black", sans-serif;
-  --font-body: "Satoshi", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Big Shoulders Display", "Haettenschweiler", "Arial Narrow", sans-serif;
+  --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
 
-  --size-hero: clamp(2.9rem, 5vw, 4.85rem);
-  --size-h2: clamp(2.5rem, 5.2vw, 4.75rem);
-  --size-h3: clamp(1.6rem, 2.6vw, 2.4rem);
+  --size-hero: clamp(3.8rem, 8.4vw, 8.6rem);
+  --size-h2: clamp(3rem, 6.6vw, 6.2rem);
+  --size-h3: clamp(1.9rem, 3.2vw, 3rem);
   --size-body-lg: clamp(1.125rem, 1.4vw, 1.3rem);
   --size-body: 1.0625rem;
   --size-small: 0.875rem;
@@ -112,10 +91,10 @@ section { scroll-margin-top: 6rem; }
 
 .display {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 800;
   text-transform: uppercase;
-  line-height: 0.94;
-  letter-spacing: 0.005em;
+  line-height: 0.86;
+  letter-spacing: 0.002em;
 }
 
 .visually-hidden {
@@ -201,6 +180,7 @@ button:focus-visible {
   letter-spacing: 0.02em;
   white-space: nowrap;
   transition: color 250ms ease;
+  font-weight: 800;
 }
 .nav-brand em { font-style: normal; color: var(--purple); transition: color 250ms ease; }
 .nav.scrolled .nav-brand { color: var(--ink); }
@@ -302,7 +282,7 @@ button:focus-visible {
     transparent 74%);
 }
 .hero-inner { position: relative; width: 100%; z-index: 1; }
-.hero-copy { max-width: 41rem; }
+.hero-copy { max-width: 46rem; }
 
 .hero-copy .eyebrow {
   font-weight: 700;
@@ -319,8 +299,8 @@ button:focus-visible {
 .hero h1 span { display: block; }
 .hero h1 .l1 {
   color: transparent;
-  -webkit-text-stroke: 2px var(--txt-on-ink);
-  text-stroke: 2px var(--txt-on-ink);
+  -webkit-text-stroke: 2.5px var(--txt-on-ink);
+  text-stroke: 2.5px var(--txt-on-ink);
 }
 .hero h1 .l2 { color: var(--purple); }
 .hero-sub {
@@ -438,6 +418,7 @@ button:focus-visible {
   line-height: 1;
   color: var(--txt-on-ink);
   font-variant-numeric: tabular-nums;
+  font-weight: 800;
 }
 .scoreboard-value.is-positive { color: var(--teal); }
 .scoreboard-note {
@@ -524,6 +505,7 @@ button:focus-visible {
   font-size: var(--size-h3);
   margin-bottom: 1.4rem;
   color: var(--txt-on-ink);
+  font-weight: 800;
 }
 .keynote-list ul { list-style: none; }
 .keynote-list li {
@@ -553,6 +535,7 @@ button:focus-visible {
   font-size: var(--size-h3);
   margin-bottom: 1.4rem;
   color: var(--txt-on-ink);
+  font-weight: 800;
 }
 .acc { display: flex; gap: 0.8rem; height: 22rem; }
 .acc-slice {
@@ -592,6 +575,7 @@ button:focus-visible {
   font-family: var(--font-display);
   font-size: 1.5rem;
   color: var(--purple);
+  font-weight: 800;
 }
 .acc-title-v {
   position: absolute;
@@ -608,6 +592,7 @@ button:focus-visible {
   color: var(--txt-on-ink);
   opacity: 1;
   transition: opacity 250ms ease;
+  font-weight: 800;
 }
 .acc-slice.is-open .acc-title-v { opacity: 0; }
 .acc-content {
@@ -623,6 +608,7 @@ button:focus-visible {
   margin-bottom: 0.7rem;
   color: var(--purple);
   white-space: nowrap;
+  font-weight: 800;
 }
 .acc-content p { color: var(--txt-on-ink-muted); font-size: 1rem; max-width: 34ch; margin: 0; }
 
@@ -643,7 +629,7 @@ button:focus-visible {
 .stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 1344 / 752;
+  aspect-ratio: 1987 / 1118;
   min-height: 24rem;
   overflow: hidden;
   isolation: isolate;
@@ -666,8 +652,8 @@ button:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.07em;
-  padding-bottom: 6%;
+  gap: 0.04em;
+  padding-top: 10%;
   text-align: center;
   pointer-events: none;
   will-change: transform;
@@ -675,12 +661,13 @@ button:focus-visible {
 .stage-type span {
   display: block;
   font-family: var(--font-display);
+  font-weight: 800;
   text-transform: uppercase;
-  line-height: 0.86;
+  line-height: 0.82;
   letter-spacing: 0.01em;
 }
 .stage-type .st-out {
-  font-size: clamp(1.7rem, 6.2vw, 6rem);
+  font-size: clamp(2.1rem, 8.4vw, 8rem);
   letter-spacing: 0.34em;
   text-indent: 0.34em;
   color: transparent;
@@ -692,7 +679,7 @@ button:focus-visible {
   text-indent: 0.72em;
 }
 .stage-type .st-solid {
-  font-size: clamp(2.4rem, 9.4vw, 9.2rem);
+  font-size: clamp(3rem, 12.6vw, 12.2rem);
   color: var(--txt-on-ink);
   white-space: nowrap;
   text-shadow: 0 0 70px rgba(1, 15, 29, 0.5);
@@ -814,6 +801,7 @@ button:focus-visible {
   margin-right: 0.6rem;
   min-width: 4.5rem;
   text-align: right;
+  font-weight: 800;
 }
 .raves-arrow {
   width: 3.25rem;
@@ -847,6 +835,7 @@ button:focus-visible {
   font-family: var(--font-display);
   text-transform: uppercase;
   font-size: clamp(1.9rem, 4.2vw, 3.6rem);
+  font-weight: 800;
 }
 .rave-head.long {
   font-size: clamp(1.7rem, 3.4vw, 2.9rem);
@@ -1145,6 +1134,7 @@ button:focus-visible {
   text-transform: uppercase;
   font-size: 1.4rem;
   color: var(--txt-on-ink);
+  font-weight: 800;
 }
 .footer-brand em { font-style: normal; color: var(--purple); }
 .footer nav ul {
