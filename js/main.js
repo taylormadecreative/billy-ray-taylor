@@ -45,6 +45,31 @@
     }
   });
 
+  /* ---------- Scrollspy ---------- */
+  var spyLinks = Array.prototype.filter.call(
+    document.querySelectorAll('.nav-links a[href^="#"]'),
+    function (a) { return !a.classList.contains("btn"); }
+  );
+  var spyMap = {};
+  spyLinks.forEach(function (a) {
+    var sec = document.querySelector(a.getAttribute("href"));
+    if (sec) spyMap[a.getAttribute("href").slice(1)] = a;
+  });
+  if ("IntersectionObserver" in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        spyLinks.forEach(function (a) { a.classList.remove("active"); });
+        var link = spyMap[en.target.id];
+        if (link) link.classList.add("active");
+      });
+    }, { rootMargin: "-35% 0px -55% 0px" });
+    Object.keys(spyMap).forEach(function (id) {
+      var sec = document.getElementById(id);
+      if (sec) spy.observe(sec);
+    });
+  }
+
   /* ---------- Horizontal accordion (the 3 Deliberates) ---------- */
   var slices = Array.prototype.slice.call(document.querySelectorAll(".acc-slice"));
   function openSlice(target) {
@@ -98,6 +123,46 @@
   ravesSection.addEventListener("mouseleave", resumeAuto);
   ravesSection.addEventListener("focusin", pauseAuto);
   ravesSection.addEventListener("focusout", resumeAuto);
+  ravesSection.addEventListener("keydown", function (e) {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    userControlled = true;
+    clearInterval(autoTimer);
+    counter.setAttribute("aria-live", "polite");
+    goTo(current + (e.key === "ArrowRight" ? 1 : -1));
+    e.preventDefault();
+  });
+
+  /* touch / drag */
+  var viewport = document.querySelector(".raves-viewport");
+  var dragX = null, dragT = 0;
+  viewport.addEventListener("pointerdown", function (e) {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    dragX = e.clientX;
+    dragT = Date.now();
+    viewport.classList.add("dragging");
+    viewport.setPointerCapture(e.pointerId);
+  });
+  viewport.addEventListener("pointermove", function (e) {
+    if (dragX === null) return;
+    var dx = e.clientX - dragX;
+    track.style.transform = "translateX(calc(-" + current * 100 + "% + " + dx + "px))";
+  });
+  function endDrag(e) {
+    if (dragX === null) return;
+    var dx = e.clientX - dragX;
+    var vel = Math.abs(dx) / Math.max(Date.now() - dragT, 1);
+    viewport.classList.remove("dragging");
+    dragX = null;
+    if (Math.abs(dx) > 60 || vel > 0.5) {
+      userControlled = true;
+      clearInterval(autoTimer);
+      goTo(current + (dx < 0 ? 1 : -1));
+    } else {
+      goTo(current);
+    }
+  }
+  viewport.addEventListener("pointerup", endDrag);
+  viewport.addEventListener("pointercancel", endDrag);
   restartAuto();
 
   /* ---------- Video: click to load ---------- */

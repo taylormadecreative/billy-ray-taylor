@@ -100,6 +100,20 @@ section { scroll-margin-top: 7.5rem; }
   letter-spacing: 0.002em;
 }
 
+.skip-link {
+  position: fixed;
+  top: -4rem;
+  left: 1rem;
+  z-index: 100;
+  background: var(--purple);
+  color: var(--ink);
+  font-weight: 700;
+  padding: 0.8rem 1.4rem;
+  border-radius: 999px;
+  transition: top 200ms var(--ease-out);
+}
+.skip-link:focus-visible { top: 1rem; }
+
 .visually-hidden {
   position: absolute;
   width: 1px; height: 1px;
@@ -184,10 +198,12 @@ section { scroll-margin-top: 7.5rem; }
   border: 2px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 160ms var(--ease-out), background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+  transition: transform 180ms var(--ease-out), background-color 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 250ms ease;
   will-change: transform;
 }
-.btn:active { transform: scale(0.97); }
+.btn:active { transform: translateY(0) scale(0.97); }
+.btn-accent { box-shadow: 0 10px 28px -10px rgba(181, 108, 210, 0.55); }
+.btn-paper { box-shadow: 0 10px 28px -12px rgba(1, 15, 29, 0.6); }
 
 .btn-accent { background: var(--purple); color: var(--ink); }
 .btn-paper { background: var(--paper); color: var(--ink); }
@@ -196,8 +212,15 @@ section { scroll-margin-top: 7.5rem; }
 .btn-ghost-paper { background: transparent; color: var(--txt-on-ink); border-color: rgba(236, 233, 224, 0.4); }
 
 @media (hover: hover) and (pointer: fine) {
-  .btn-accent:hover { background: var(--purple-hover); }
-  .btn-paper:hover { background: #FFFFFF; }
+  .btn-accent:hover {
+    background: var(--purple-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px -10px rgba(181, 108, 210, 0.75);
+  }
+  .btn-paper:hover {
+    background: #FFFFFF;
+    transform: translateY(-2px);
+  }
   .btn-ink:hover { background: var(--ink-3); }
   .btn-ghost-ink:hover { border-color: var(--ink); background: rgba(1, 15, 29, 0.05); }
   .btn-ghost-paper:hover { border-color: var(--txt-on-ink); background: rgba(236, 233, 224, 0.08); }
@@ -234,7 +257,7 @@ button:focus-visible {
 }
 .utility a { color: rgba(236, 233, 224, 0.82); }
 .utility .u-left { display: flex; gap: 1.1rem; align-items: center; }
-.utility .u-sep { opacity: 0.4; }
+.utility .u-sep { opacity: 0.6; }
 .utility .u-tag { color: var(--purple); font-weight: 700; letter-spacing: 0.04em; }
 @media (hover: hover) and (pointer: fine) {
   .utility a:hover { color: #FFFFFF; }
@@ -289,6 +312,23 @@ button:focus-visible {
 }
 @media (hover: hover) and (pointer: fine) {
   .nav-links a:not(.btn):hover { color: var(--purple); }
+}
+.nav-links a:not(.btn).active { color: var(--purple); }
+.nav-links a:not(.btn)::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.55rem;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--purple);
+  transform: translateX(-50%) scale(0);
+  transition: transform 250ms var(--ease-out);
+}
+.nav-links a:not(.btn).active::after { transform: translateX(-50%) scale(1); }
+@media (hover: hover) and (pointer: fine) {
+  .nav-links-spacer-unused { display: none; }
 }
 .nav .btn { padding: 0.65rem 1.2rem; font-size: 0.92rem; }
 
@@ -388,6 +428,22 @@ button:focus-visible {
   will-change: transform;
   pointer-events: none;
 }
+.hero-figure::before {
+  content: "";
+  position: absolute;
+  inset: -12% -20%;
+  z-index: -1;
+  background: radial-gradient(50% 42% at 55% 46%, rgba(181, 108, 210, 0.5), rgba(143, 240, 220, 0.12) 60%, transparent 74%);
+  animation: hero-breathe 5.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes hero-breathe {
+  from { opacity: 0.65; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-figure::before { animation: none; }
+}
 .hero-billy {
   height: 100%;
   width: auto;
@@ -481,9 +537,12 @@ button:focus-visible {
 .marquee-track {
   display: flex;
   align-items: center;
-  gap: clamp(3rem, 6vw, 5.5rem);
   width: max-content;
   animation: marquee 34s linear infinite;
+}
+.marquee-track img { margin-right: clamp(3rem, 6vw, 5.5rem); }
+@media (hover: hover) and (pointer: fine) {
+  .marquee:hover .marquee-track { animation-play-state: paused; }
 }
 .marquee-track img {
   height: clamp(2rem, 3vw, 2.6rem);
@@ -736,6 +795,12 @@ button:focus-visible {
   border-radius: 18px;
   overflow: hidden;
   background: linear-gradient(180deg, rgba(11, 24, 38, 0.92), rgba(4, 11, 19, 0.92));
+  transition: transform 300ms var(--ease-out), box-shadow 300ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .play-card:hover { transform: translateY(-3px); }
+  .pc-problem:hover { box-shadow: 0 30px 70px -26px rgba(181, 108, 210, 0.65); }
+  .pc-payoff:hover { box-shadow: 0 30px 70px -26px rgba(72, 167, 155, 0.7); }
 }
 .pc-problem {
   border: 1px solid rgba(181, 108, 210, 0.42);
@@ -870,10 +935,9 @@ button:focus-visible {
 .acc-content .acc-title {
   font-family: var(--font-display);
   text-transform: uppercase;
-  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
   margin-bottom: 0.7rem;
   color: var(--acc-c, var(--purple));
-  white-space: nowrap;
   font-weight: 800;
 }
 .acc-content p { color: var(--txt-on-ink-muted); font-size: 1rem; max-width: 34ch; margin: 0; }
@@ -1111,7 +1175,9 @@ button:focus-visible {
 }
 .raves-arrow:active { transform: scale(0.94); }
 
-.raves-viewport { overflow: hidden; }
+.raves-viewport { overflow: hidden; touch-action: pan-y; cursor: grab; }
+.raves-viewport.dragging { cursor: grabbing; }
+.raves-viewport.dragging .raves-track { transition: none; }
 .raves-track {
   display: flex;
   transition: transform 620ms var(--ease-in-out);
@@ -1178,6 +1244,10 @@ button:focus-visible {
   padding: clamp(1.5rem, 3vw, 2.75rem);
   box-shadow: 0 32px 72px -30px rgba(1, 15, 29, 0.35);
   rotate: 2deg;
+  transition: rotate 450ms var(--ease-out), box-shadow 450ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .book-shot:hover { rotate: 0deg; box-shadow: 0 40px 90px -30px rgba(1, 15, 29, 0.55); }
 }
 .book-shot img { width: 100%; }
 
@@ -1322,6 +1392,9 @@ button:focus-visible {
   gap: 1.2rem;
   max-width: 52rem;
 }
+@media (max-width: 700px) {
+  .headshot-row { grid-template-columns: repeat(2, 1fr); }
+}
 .headshot-row a {
   border-radius: 18px;
   overflow: hidden;
@@ -1360,6 +1433,10 @@ button:focus-visible {
     linear-gradient(150deg, var(--purple-deep) 0%, #3B2A66 52%, var(--ink-deep) 100%);
   padding: clamp(6.5rem, 12vw, 11rem) 0;
   text-align: center;
+}
+.book-billy .cta-win {
+  color: var(--mint);
+  text-shadow: 0 0 44px rgba(143, 240, 220, 0.45);
 }
 .book-billy h2 {
   font-size: clamp(4rem, 11vw, 9.5rem);

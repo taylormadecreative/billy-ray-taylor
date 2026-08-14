@@ -19,9 +19,11 @@
   <meta name="twitter:description" content="Author of The Winning Link. Trusted by Nike, GE, SHINGO, and the U.S. Army. Book Billy for your next event.">
   <meta name="twitter:image" content="https://taylormadecreative.github.io/billy-ray-taylor/assets/og-image.jpg">
 
+  <meta name="theme-color" content="#010F1D">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
+  <link rel="preload" href="assets/hero-wall.jpg" as="image">
   <link rel="preload" href="assets/fonts/BigShouldersDisplay-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/Archivo-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
@@ -44,6 +46,8 @@
   </script>
 </head>
 <body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <div class="utility" id="top">
     <div class="utility-inner">
@@ -74,7 +78,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main">
 
     <!-- Attention -->
     <section class="hero">
@@ -435,7 +439,7 @@
     <!-- Action: big CTA -->
     <section class="book-billy" id="book-billy">
       <div class="container">
-        <h2 class="display" data-reveal>Ready to win?</h2>
+        <h2 class="display" data-reveal>Ready to <span class="cta-win">win?</span></h2>
         <p data-reveal>Book Billy Ray Taylor for your next conference, kickoff, or leadership summit. He's ready to help your organization win.</p>
         <div class="book-billy-ctas" data-reveal>
           <a class="btn btn-paper" href="mailto:info@linkedxl.com?subject=Booking%20Inquiry%3A%20Billy%20Ray%20Taylor">Start the Conversation</a>
