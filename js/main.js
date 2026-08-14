@@ -195,29 +195,68 @@
     }
   }
 
-  /* Scoreboard dial: -$38M rolls up to $1B+ */
+  /* Win chart: the line draws itself up to $1B+ while the counter climbs.
+     Default markup is the COMPLETE chart, so reduced-motion and no-JS see the
+     finished graphic; start states are applied only when the animation runs. */
   var dial = document.getElementById("score-dial");
-  if (dial) {
+  var winPath = document.getElementById("win-path");
+  var winDot = document.getElementById("win-dot");
+  var clipRect = document.getElementById("draw-clip-rect");
+  if (dial && winPath && winDot && clipRect) {
+    var pathLen = winPath.getTotalLength();
+    winPath.style.strokeDasharray = pathLen;
+    winPath.style.strokeDashoffset = pathLen;
+    clipRect.setAttribute("width", "0");
+    winDot.setAttribute("opacity", "0");
     dial.classList.remove("is-positive");
     dial.textContent = "-$38M";
-    var state = { v: -38 };
+
     function fmt(v) {
       if (v < 0) return "-$" + Math.abs(Math.round(v)) + "M";
       if (v < 1000) return "$" + Math.round(v) + "M";
       return "$1B+";
     }
-    gsap.to(state, {
-      v: 1000,
-      duration: 2.4,
+    var state = { p: 0 };
+    var chartTween = gsap.to(state, {
+      p: 1,
+      duration: 2.8,
       ease: "power2.inOut",
-      scrollTrigger: { trigger: ".scoreboard", start: "top 75%", once: true },
+      scrollTrigger: { trigger: ".win-chart-wrap", start: "top 72%", once: true },
       onUpdate: function () {
-        dial.textContent = fmt(state.v);
-        dial.classList.toggle("is-positive", state.v >= 1000);
+        var p = state.p;
+        winPath.style.strokeDashoffset = pathLen * (1 - p);
+        var pt = winPath.getPointAtLength(pathLen * p);
+        winDot.setAttribute("cx", pt.x);
+        winDot.setAttribute("cy", pt.y);
+        winDot.setAttribute("opacity", p > 0.02 ? "1" : "0");
+        clipRect.setAttribute("width", String(30 + (1170 - 30) * p));
+        var v = -38 + 1038 * p;
+        dial.textContent = fmt(v);
+        dial.classList.toggle("is-positive", v >= 1000);
       },
       onComplete: function () {
-        gsap.fromTo(dial, { scale: 1.07 }, { scale: 1, duration: 0.5, ease: "power2.out" });
+        gsap.fromTo(dial, { scale: 1.08 }, { scale: 1, duration: 0.5, ease: "power2.out" });
+        gsap.fromTo(winDot, { attr: { r: 15 } }, { attr: { r: 10 }, duration: 0.6, ease: "power2.out" });
       }
     });
+
+    /* Watchdog: if the trigger never fires while the chart is on screen, snap to
+       the finished graphic with plain DOM writes so it can never sit invisible. */
+    setInterval(function () {
+      if (state.p > 0) return;
+      var r = document.querySelector(".win-chart-wrap").getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.9 && r.bottom > 0) {
+        if (chartTween.progress() > 0) return;
+        chartTween.kill();
+        winPath.style.strokeDashoffset = "0";
+        clipRect.setAttribute("width", "1170");
+        winDot.setAttribute("opacity", "1");
+        winDot.setAttribute("cx", "1140");
+        winDot.setAttribute("cy", "48");
+        dial.textContent = "$1B+";
+        dial.classList.add("is-positive");
+        state.p = 1;
+      }
+    }, 3000);
   }
 })();

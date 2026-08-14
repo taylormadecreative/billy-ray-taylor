@@ -121,23 +121,48 @@
       <div class="container">
         <h2 class="display" data-reveal>He makes the score visible.<br>Then he <span class="hit">changes it.</span></h2>
         <p class="score-lede" data-reveal>As North American Director at Goodyear, Billy led multiple turnarounds and helped swing the company's earnings by more than a billion dollars. The system he built doing it became <strong>LinkedXL</strong>, the process he now teaches from stages around the world.</p>
-        <div class="scoreboard" data-reveal>
-          <div class="board" role="img" aria-label="Scoreboard: Goodyear earnings swing from a 38 million dollar loss to over 1 billion dollars">
-            <div class="board-head">
-              <span>Goodyear earnings</span>
-              <span class="board-tag">The turnaround</span>
-            </div>
-            <div class="board-screen">
-              <p class="board-value is-positive" id="score-dial" aria-hidden="true">$1B+</p>
-            </div>
-            <div class="board-foot">
-              <span>Started</span><strong>-$38M</strong>
-              <span class="board-sep"></span>
-              <span>Landed</span><strong>$1B+</strong>
-            </div>
+        <div class="win-chart-wrap" role="img" aria-label="Animated graph of Goodyear earnings climbing from a 38 million dollar loss to over 1 billion dollars">
+          <svg class="win-chart" viewBox="0 0 1200 520" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="winGrad" gradientUnits="userSpaceOnUse" x1="30" y1="455" x2="1140" y2="48">
+                <stop offset="0" stop-color="#B56CD2"/>
+                <stop offset="0.55" stop-color="#6C93BC"/>
+                <stop offset="1" stop-color="#8FF0DC"/>
+              </linearGradient>
+              <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#8FA0DC" stop-opacity="0.20"/>
+                <stop offset="1" stop-color="#8FA0DC" stop-opacity="0"/>
+              </linearGradient>
+              <clipPath id="drawClip"><rect id="draw-clip-rect" x="0" y="0" width="1200" height="520"/></clipPath>
+            </defs>
+
+            <g class="wc-grid">
+              <line x1="30" y1="100" x2="1170" y2="100"/>
+              <line x1="30" y1="200" x2="1170" y2="200"/>
+              <line x1="30" y1="300" x2="1170" y2="300"/>
+            </g>
+            <g class="wc-zero">
+              <line x1="30" y1="400" x2="1170" y2="400"/>
+              <text x="30" y="388">$0</text>
+            </g>
+
+            <g clip-path="url(#drawClip)">
+              <path class="wc-area" d="M 30 455 C 140 452 220 430 300 398 C 380 366 420 380 500 352 C 580 324 620 336 700 296 C 780 256 830 250 900 200 C 970 150 1030 100 1140 48 L 1140 520 L 30 520 Z"/>
+            </g>
+            <path class="wc-line" id="win-path" d="M 30 455 C 140 452 220 430 300 398 C 380 366 420 380 500 352 C 580 324 620 336 700 296 C 780 256 830 250 900 200 C 970 150 1030 100 1140 48"/>
+
+            <g class="wc-start">
+              <circle cx="30" cy="455" r="7"/>
+              <text x="48" y="482">-$38M</text>
+            </g>
+            <circle class="wc-dot" id="win-dot" cx="1140" cy="48" r="10"/>
+          </svg>
+          <div class="chart-callout" aria-hidden="true">
+            <p class="board-value is-positive" id="score-dial">$1B+</p>
+            <p class="chart-callout-sub">Goodyear earnings · the swing Billy helped drive</p>
           </div>
-          <p class="scoreboard-note">The swing Billy helped drive, from a <strong>$38 million loss</strong> to <strong>over $1 billion</strong>. That story, and the system behind it, is the keynote.</p>
         </div>
+        <p class="scoreboard-note">From a <strong>$38 million loss</strong> to <strong>over $1 billion</strong>. That story, and the system behind it, is the keynote.</p>
         <blockquote class="score-quote" data-reveal>
           <p>"Billy Taylor excels at building a cohesive team, aligning them around a clearly defined target, and executing strategy through connected operating processes that lead to 'winning' and making the score visible and obvious."</p>
           <footer>Bart Reimer, Vice President of Operations, Charter Steel</footer>
@@ -150,16 +175,13 @@
       <div class="container keynote-grid">
         <div class="keynote-pin">
           <p class="kicker">The signature keynote</p>
-          <h2 class="display">How We Win</h2>
+          <h2 class="display kn-title"><span class="kn-l1">How</span><span class="kn-l2">We Win</span></h2>
           <p class="keynote-sub">Defining, aligning, and executing winning strategies at every level of your organization.</p>
           <p class="keynote-book">Based on the book <a href="#book">The Winning Link</a></p>
           <div class="keynote-ctas">
             <a class="btn btn-accent" href="#book-billy">Book This Keynote</a>
             <a class="btn btn-ghost-paper" href="https://drive.google.com/file/d/1OjrxF4zcaC8TSn_XVPp2FyBtnIzWFsbc/view?usp=drive_link" target="_blank" rel="noopener">Download Keynote Details</a>
           </div>
-          <figure class="keynote-figure">
-            <img src="assets/keynote-billy.jpg" alt="Billy Ray Taylor delivering the How We Win keynote" width="900" height="1200" loading="lazy">
-          </figure>
           <div class="keynote-links" aria-hidden="true">
             <svg viewBox="0 0 440 240" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g transform="rotate(-14 220 120)">
@@ -172,24 +194,25 @@
           </div>
         </div>
         <div class="keynote-body">
-          <p data-reveal>This highly actionable keynote details how to win, featuring the LinkedXL process used by countless organizations to finally start winning. Billy lays out the strategies, mindsets, and processes proven to convert strategy into results, disconnected operations into an aligned enterprise, and a lack of trust into a high-performing, self-sustaining culture of ownership.</p>
+          <p class="keynote-lede" data-reveal>This highly actionable keynote details <strong>how to win</strong>, featuring the LinkedXL process used by countless organizations to finally start winning. Billy lays out the strategies, mindsets, and processes proven to convert strategy into results, disconnected operations into an aligned enterprise, and a lack of trust into a high-performing, self-sustaining culture of ownership.</p>
 
-          <div class="keynote-list" data-reveal>
-            <h3>Built for teams that are</h3>
-            <ul>
-              <li><strong>Stuck on strategy:</strong> lacking clarity on how to define, align, or execute the strategies that build trust and deliver sustainable results.</li>
-              <li><strong>Colliding, not connecting:</strong> experiencing chaos and collisions rather than efficiency and connection, because of misalignment.</li>
-              <li><strong>Fighting fires:</strong> constantly reacting to problems but unable to identify the issues constraining their performance.</li>
-            </ul>
-          </div>
-
-          <div class="keynote-list wins" data-reveal>
-            <h3>Your audience walks away with</h3>
-            <ul>
-              <li>A clear understanding of how to build and implement a <strong>connected business model</strong> that helps them win.</li>
-              <li>The motivation and tools to implement a <strong>Daily Management System</strong> that empowers their people to execute the right processes.</li>
-              <li>The ability to build the <strong>3D approach</strong> needed to create a winning organization.</li>
-            </ul>
+          <div class="play-cards">
+            <article class="play-card pc-problem" data-reveal>
+              <header class="pc-head"><span>Built for teams that are</span><span class="pc-mark">▮▮</span></header>
+              <ul>
+                <li><i>01</i><div><strong>Stuck on strategy:</strong> lacking clarity on how to define, align, or execute the strategies that build trust and deliver sustainable results.</div></li>
+                <li><i>02</i><div><strong>Colliding, not connecting:</strong> experiencing chaos and collisions rather than efficiency and connection, because of misalignment.</div></li>
+                <li><i>03</i><div><strong>Fighting fires:</strong> constantly reacting to problems but unable to identify the issues constraining their performance.</div></li>
+              </ul>
+            </article>
+            <article class="play-card pc-payoff" data-reveal>
+              <header class="pc-head"><span>Your audience walks away with</span><span class="pc-mark">▮▮</span></header>
+              <ul>
+                <li><i>01</i><div><strong>A connected business model:</strong> a clear understanding of how to build and implement one that helps them win.</div></li>
+                <li><i>02</i><div><strong>A Daily Management System:</strong> the motivation and tools to implement it, empowering their people to execute the right processes.</div></li>
+                <li><i>03</i><div><strong>The 3D approach:</strong> the ability to build it and create a winning organization.</div></li>
+              </ul>
+            </article>
           </div>
 
           <div class="deliberates" data-reveal>

@@ -521,57 +521,71 @@ button:focus-visible {
 }
 .score-lede strong { color: #FFFFFF; }
 
-.scoreboard {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 3rem);
+.win-chart-wrap {
+  position: relative;
+  margin-top: 1rem;
 }
-.board {
-  background: linear-gradient(180deg, #0B1826, #040B13);
-  border: 1px solid rgba(181, 108, 210, 0.4);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow:
-    0 0 0 6px rgba(1, 15, 29, 0.65),
-    0 34px 80px -30px rgba(181, 108, 210, 0.5);
+.win-chart {
+  width: 100%;
+  height: auto;
+  display: block;
 }
-.board-head,
-.board-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.85rem 1.3rem;
-  font-size: 0.8rem;
+.wc-grid line {
+  stroke: rgba(236, 233, 224, 0.10);
+  stroke-width: 1;
+  stroke-dasharray: 2 8;
+}
+.wc-zero line {
+  stroke: rgba(236, 233, 224, 0.28);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 7;
+}
+.wc-zero text,
+.wc-start text {
+  font-family: var(--font-body);
+  font-size: 17px;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
+  fill: var(--txt-on-ink-muted);
+}
+.wc-start text { fill: var(--purple); font-size: 21px; }
+.wc-start circle { fill: var(--purple); }
+.wc-area { fill: url(#areaGrad); }
+.wc-line {
+  fill: none;
+  stroke: url(#winGrad);
+  stroke-width: 7;
+  stroke-linecap: round;
+  filter:
+    drop-shadow(0 0 10px rgba(143, 240, 220, 0.45))
+    drop-shadow(0 0 30px rgba(181, 108, 210, 0.35));
+}
+.wc-dot {
+  fill: var(--mint);
+  filter:
+    drop-shadow(0 0 10px rgba(143, 240, 220, 0.95))
+    drop-shadow(0 0 30px rgba(143, 240, 220, 0.6));
+}
+.chart-callout {
+  position: absolute;
+  top: 2%;
+  left: 3%;
+  pointer-events: none;
+}
+.chart-callout-sub {
+  margin-top: 0.5rem;
+  font-size: var(--size-small);
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--txt-on-ink-muted);
-}
-.board-head { border-bottom: 1px solid rgba(236, 233, 224, 0.12); }
-.board-foot { border-top: 1px solid rgba(236, 233, 224, 0.12); }
-.board-tag { color: var(--mint); }
-.board-foot strong { color: var(--txt-on-ink); font-weight: 700; }
-.board-foot .board-sep { flex: 1; border-top: 1px dashed rgba(236, 233, 224, 0.18); }
-.board-screen {
-  position: relative;
-  padding: clamp(1.4rem, 3vw, 2.4rem) 1.3rem;
-  background: #020710;
-}
-.board-screen::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(rgba(236, 233, 224, 0.07) 1px, transparent 1.6px) 0 0 / 8px 8px;
-  pointer-events: none;
 }
 .board-value {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(3.8rem, 8.5vw, 8rem);
+  font-size: clamp(3.4rem, 8.5vw, 8.5rem);
   line-height: 0.9;
-  text-align: center;
+  text-align: left;
   font-variant-numeric: tabular-nums;
   color: var(--purple);
   text-shadow:
@@ -587,6 +601,8 @@ button:focus-visible {
 .scoreboard-note {
   color: var(--txt-on-ink-muted);
   font-size: var(--size-body);
+  max-width: 52ch;
+  margin-top: 1.2rem;
 }
 .scoreboard-note strong { color: var(--txt-on-ink); }
 @media (max-width: 860px) {
@@ -621,10 +637,21 @@ button:focus-visible {
   text-transform: uppercase;
   margin-bottom: 1.2rem;
 }
-.keynote-pin h2 {
-  font-size: clamp(3.2rem, 6.5vw, 6rem);
-  color: var(--purple);
+.keynote-pin h2.kn-title {
   margin-bottom: 1.2rem;
+}
+.kn-title span { display: block; line-height: 0.84; }
+.kn-title .kn-l1 {
+  font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+  color: transparent;
+  -webkit-text-stroke: 2px var(--txt-on-ink);
+  text-stroke: 2px var(--txt-on-ink);
+  letter-spacing: 0.16em;
+}
+.kn-title .kn-l2 {
+  font-size: clamp(3.6rem, 7vw, 6.6rem);
+  color: var(--purple);
+  text-shadow: 0 0 40px rgba(181, 108, 210, 0.35);
 }
 .keynote-pin .keynote-sub {
   font-size: var(--size-body-lg);
@@ -638,12 +665,6 @@ button:focus-visible {
   margin-bottom: 2.2rem;
 }
 .keynote-pin .keynote-book a { color: var(--teal); font-weight: 700; }
-.keynote-figure {
-  margin: 2.6rem 0 0;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 26px 60px -26px rgba(1, 15, 29, 0.9);
-}
 .keynote-links {
   margin-top: 2.4rem;
   width: 100%;
@@ -664,9 +685,7 @@ button:focus-visible {
   font-weight: 700;
   letter-spacing: 0.18em;
 }
-.keynote-figure img { width: 100%; height: auto; display: block; }
 @media (max-width: 960px) {
-  .keynote-figure { max-width: 100%; margin-top: 2rem; }
 }
 
 .keynote-ctas {
@@ -678,41 +697,67 @@ button:focus-visible {
 }
 .keynote-ctas .btn { justify-content: center; text-align: center; }
 
-.keynote-body p {
+.keynote-lede {
   font-size: var(--size-body-lg);
-  color: var(--txt-on-ink);
+  color: rgba(236, 233, 224, 0.88);
   max-width: 62ch;
   margin-bottom: 3rem;
 }
-.keynote-list { margin-bottom: 3rem; }
-.keynote-list h3 {
+.keynote-lede strong { color: var(--mint); }
+.play-cards {
+  display: grid;
+  gap: 1.4rem;
+  margin-bottom: 3rem;
+}
+.play-card {
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(11, 24, 38, 0.92), rgba(4, 11, 19, 0.92));
+}
+.pc-problem {
+  border: 1px solid rgba(181, 108, 210, 0.42);
+  box-shadow: 0 24px 60px -28px rgba(181, 108, 210, 0.45);
+}
+.pc-payoff {
+  border: 1px solid rgba(143, 240, 220, 0.35);
+  box-shadow: 0 24px 60px -28px rgba(72, 167, 155, 0.5);
+}
+.pc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.4rem;
   font-family: var(--font-display);
-  text-transform: uppercase;
-  font-size: var(--size-h3);
-  margin-bottom: 1.4rem;
-  color: var(--txt-on-ink);
   font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(236, 233, 224, 0.12);
 }
-.keynote-list ul { list-style: none; }
-.keynote-list li {
-  padding: 1.1rem 0 1.1rem 1.9rem;
-  border-top: 1px solid rgba(236, 233, 224, 0.14);
-  position: relative;
+.pc-problem .pc-head { color: var(--purple); }
+.pc-payoff .pc-head { color: var(--mint); }
+.pc-mark { font-size: 0.7em; opacity: 0.65; letter-spacing: 0.2em; }
+.play-card ul { list-style: none; margin: 0; padding: 0.4rem 0; }
+.play-card li {
+  display: flex;
+  gap: 1.1rem;
+  align-items: baseline;
+  padding: 1rem 1.4rem;
   color: var(--txt-on-ink-muted);
-  max-width: 62ch;
 }
-.keynote-list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 1.55rem;
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 3px;
-  background: var(--purple);
+.play-card li + li { border-top: 1px solid rgba(236, 233, 224, 0.08); }
+.play-card li i {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: normal;
+  font-size: 1.6rem;
+  line-height: 1;
+  flex: none;
 }
-.keynote-list.wins li::before { background: var(--teal); }
-.keynote-list li strong { color: var(--txt-on-ink); }
+.pc-problem li i { color: var(--purple); }
+.pc-payoff li i { color: var(--mint); }
+.play-card li strong { color: var(--txt-on-ink); }
 
 /* Horizontal accordion: the 3 Deliberates */
 .deliberates h3 {
@@ -747,13 +792,24 @@ button:focus-visible {
   content: attr(data-num);
   font-weight: 800;
   position: absolute;
-  top: -2.2rem;
-  right: 0.4rem;
+  bottom: -1.6rem;
+  right: 0.6rem;
   font-family: var(--font-display);
-  font-size: 11rem;
+  font-size: 9rem;
   line-height: 1;
-  color: rgba(181, 108, 210, 0.09);
+  color: var(--acc-c, #B56CD2);
+  opacity: 0;
+  transition: opacity 400ms ease 150ms;
   pointer-events: none;
+}
+.acc-slice.is-open::before { opacity: 0.14; }
+.acc-slice:nth-child(1) { --acc-c: #B56CD2; }
+.acc-slice:nth-child(2) { --acc-c: #6C93BC; }
+.acc-slice:nth-child(3) { --acc-c: #48A79B; }
+.acc-slice.is-open {
+  background:
+    radial-gradient(30rem 18rem at 85% 110%, color-mix(in srgb, var(--acc-c) 24%, transparent), transparent 70%),
+    var(--ink-3);
 }
 .acc-num {
   position: absolute;
@@ -761,7 +817,7 @@ button:focus-visible {
   left: 1.6rem;
   font-family: var(--font-display);
   font-size: 1.5rem;
-  color: var(--purple);
+  color: var(--acc-c, var(--purple));
   font-weight: 800;
 }
 .acc-title-v {
@@ -793,7 +849,7 @@ button:focus-visible {
   text-transform: uppercase;
   font-size: clamp(1.5rem, 2.4vw, 2.1rem);
   margin-bottom: 0.7rem;
-  color: var(--purple);
+  color: var(--acc-c, var(--purple));
   white-space: nowrap;
   font-weight: 800;
 }
