@@ -1,29 +1,25 @@
 # Design system — Billy Ray Taylor speaker site
 
-## Palette — LinkedXL brand, exact
-Pulled from linkedxl.com's declared global palette (GeneratePress CSS custom properties), not inferred.
+## Palette — LinkedXL blues and purples, exact
+Pulled from linkedxl.com's declared global palette and the Billy Taylor page's own layout CSS. That page leads with purple, over navy grounds, so this site does too. Coral (their --accent) is deliberately not used here.
 
-| Token | Value | Their name |
+| Token | Value | Source |
 |---|---|---|
 | --ink | #010F1D | --contrast |
+| --ink-deep | #071428 | their hero gradient navy |
+| --indigo | #242454 | sampled from their LED hero wall |
 | --paper | #FBFBF9 | --global-color-8 |
 | --paper-2 | #ECE9E0 | --base |
-| --coral | #FF7155 | --accent |
-| --coral-hover | #FF8461 | --global-color-9 |
-| --teal | #48A79B | --base-2 |
-| --steel | #48749C | --contrast-2 |
+| --purple | #B56CD2 | Billy page accent + BT Expressed mark |
 | --purple-deep | #752A93 | --contrast-3 |
-| --purple | #B56CD2 | BT Expressed logo, exact |
+| --steel | #48749C | --contrast-2 |
+| --teal | #48A79B | --base-2 |
 
 Logo marks for reference: navy #00274A, mint #79CDB5, steel #406688.
 
-Derived shades exist only where a brand color fails WCAG on a light ground. Coral is 2.62:1 on paper and teal is 2.79:1, so neither may be used as text on light:
-- --coral-display #BF543F (4.45 on paper) for large display accents on light
-- --coral-deep #A54937 (4.79 on cream) for small coral text on light
-- --steel-text #41678A (4.90 on cream) for links and labels on light
-- --txt-muted #46545F navy-tinted body copy
+Roles: purple is the identity accent, blue/steel carries links and structure, teal marks the win (the scoreboard figure, the outcome list). Purple runs raw on dark grounds; on light grounds it drops to --purple-deep, because #B56CD2 measures only 3.36:1 on paper. Steel likewise drops to --steel-text #41678A on light and is large-text-only on dark (3.91:1).
 
-On dark grounds the brand colors are used raw: coral 7.12, teal 6.69, cream 15.91, purple 5.56.
+Derived: --purple-hover #C285DC, --steel-text #41678A, --txt-muted #46545F.
 
 ## Typography
 - Display: Tanker (Fontshare), all-caps headlines, tight leading (0.92), clamp() fluid.
