@@ -47,7 +47,7 @@
   --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
 
   --size-hero: clamp(3.8rem, 8.4vw, 8.6rem);
-  --size-h2: clamp(3rem, 6.6vw, 6.2rem);
+  --size-h2: clamp(2.4rem, 6.6vw, 6.2rem);
   --size-h3: clamp(1.9rem, 3.2vw, 3rem);
   --size-body-lg: clamp(1.125rem, 1.4vw, 1.3rem);
   --size-body: 1.0625rem;
@@ -98,6 +98,9 @@ section { scroll-margin-top: 7.5rem; }
   text-transform: uppercase;
   line-height: 0.86;
   letter-spacing: 0.002em;
+}
+@media (max-width: 700px) {
+  .display { line-height: 0.94; }
 }
 
 .skip-link {
@@ -517,30 +520,64 @@ button:focus-visible {
 
 @media (max-width: 900px) {
   .hero {
-    min-height: 0;
+    min-height: 100svh;
+    padding-top: calc(var(--chrome-h) + 1.1rem);
     padding-bottom: 0;
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
   }
-  .hero-inner { order: 1; }
-  .hero-figure { order: 2; }
   .hero-bg::after {
     background: linear-gradient(180deg,
-      rgba(1, 15, 29, 0.72) 0%,
-      rgba(1, 15, 29, 0.86) 46%,
-      rgba(1, 15, 29, 0.55) 100%);
+      rgba(1, 15, 29, 0.74) 0%,
+      rgba(1, 15, 29, 0.85) 42%,
+      rgba(1, 15, 29, 0.5) 100%);
   }
-  .hero-inner { padding-bottom: 2rem; }
+  .hero-inner { order: 1; }
+  .hero-copy { max-width: none; }
+  .hero-copy .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.8rem;
+    max-width: none;
+  }
+  .hero h1 { font-size: clamp(2.1rem, 10.5vw, 3rem); margin-bottom: 1rem; }
+  .hero h1 .l1 { -webkit-text-stroke-width: 1.6px; }
+  .hero h1 .l2 { margin-top: 0.08em; }
+  .hero-sub { font-size: 0.99rem; margin-bottom: 1.3rem; max-width: 36rem; }
+  .hero-ctas { gap: 0.6rem; }
+  .hero-ctas .btn {
+    padding: 0.85rem 1.1rem;
+    font-size: 0.9rem;
+    flex: 1 1 auto;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  /* Billy owns the rest of the first viewport */
   .hero-figure {
+    order: 2;
     position: relative;
     right: auto;
-    margin: 1.5rem auto 0;
+    bottom: auto;
     height: auto;
-    width: min(78%, 20rem);
+    width: min(72%, 19rem);
+    margin: 0.6rem auto 0;
+    margin-top: auto;
     display: block;
+    flex: 1 1 auto;
+    min-height: 14rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
   }
-  .hero-billy { height: auto; width: 100%; }
-  .hero h1 .l1 { -webkit-text-stroke-width: 1.8px; }
+  .hero-billy {
+    height: 100%;
+    max-height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+  }
 }
 
 /* ---------- Trusted-by marquee ---------- */
@@ -975,13 +1012,44 @@ button:focus-visible {
 
 @media (max-width: 960px) {
   .keynote-grid { grid-template-columns: 1fr; }
-  .acc { flex-direction: column; height: auto; }
-  .acc-slice { flex: none; min-height: 0; }
+  .acc { flex-direction: column; height: auto; gap: 0.7rem; }
+  .acc-slice {
+    flex: none;
+    min-height: 0;
+    min-width: 0;
+    padding: 1.15rem 1.25rem;
+    display: block;
+  }
   .acc-title-v { display: none; }
-  .acc-num { position: static; margin-bottom: 0.5rem; }
-  .acc-content { opacity: 1; transform: none; }
-  .acc-content p { max-width: 60ch; }
-  .acc-content .acc-title { white-space: normal; }
+  .acc-num {
+    position: static;
+    display: inline-block;
+    margin: 0 0.7rem 0.35rem 0;
+    font-size: 1.2rem;
+  }
+  /* collapse the body with an animated grid row; the title stays visible */
+  .acc-content {
+    display: grid;
+    grid-template-rows: auto 0fr;
+    transition: grid-template-rows 480ms var(--ease-in-out);
+    opacity: 1;
+    transform: none;
+  }
+  .acc-slice.is-open .acc-content { grid-template-rows: auto 1fr; }
+  .acc-content .acc-title {
+    display: inline;
+    font-size: 1.35rem;
+    margin-bottom: 0;
+  }
+  .acc-content p {
+    max-width: 60ch;
+    min-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 320ms ease 120ms;
+  }
+  .acc-slice.is-open .acc-content p { opacity: 1; padding-top: 0.55rem; }
+  .acc-slice::before { font-size: 6.5rem; bottom: -1rem; }
 }
 
 /* ---------- Stage: type masked by Billy ---------- */
