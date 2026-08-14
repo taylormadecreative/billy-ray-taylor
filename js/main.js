@@ -214,6 +214,9 @@
       onUpdate: function () {
         dial.textContent = fmt(state.v);
         dial.classList.toggle("is-positive", state.v >= 1000);
+      },
+      onComplete: function () {
+        gsap.fromTo(dial, { scale: 1.07 }, { scale: 1, duration: 0.5, ease: "power2.out" });
       }
     });
   }

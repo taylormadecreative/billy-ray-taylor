@@ -122,9 +122,19 @@
         <h2 class="display" data-reveal>He makes the score visible.<br>Then he <span class="hit">changes it.</span></h2>
         <p class="score-lede" data-reveal>As North American Director at Goodyear, Billy led multiple turnarounds and helped swing the company's earnings by more than a billion dollars. The system he built doing it became <strong>LinkedXL</strong>, the process he now teaches from stages around the world.</p>
         <div class="scoreboard" data-reveal>
-          <div>
-            <p class="scoreboard-label">Goodyear earnings</p>
-            <p class="scoreboard-value is-positive" id="score-dial" data-score>$1B+</p>
+          <div class="board" role="img" aria-label="Scoreboard: Goodyear earnings swing from a 38 million dollar loss to over 1 billion dollars">
+            <div class="board-head">
+              <span>Goodyear earnings</span>
+              <span class="board-tag">The turnaround</span>
+            </div>
+            <div class="board-screen">
+              <p class="board-value is-positive" id="score-dial" aria-hidden="true">$1B+</p>
+            </div>
+            <div class="board-foot">
+              <span>Started</span><strong>-$38M</strong>
+              <span class="board-sep"></span>
+              <span>Landed</span><strong>$1B+</strong>
+            </div>
           </div>
           <p class="scoreboard-note">The swing Billy helped drive, from a <strong>$38 million loss</strong> to <strong>over $1 billion</strong>. That story, and the system behind it, is the keynote.</p>
         </div>

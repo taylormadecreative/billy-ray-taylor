@@ -144,6 +144,19 @@ section { scroll-margin-top: 7.5rem; }
 .wall-teal { --wall-img: url("../assets/wall-teal.jpg"); }
 /* the teal plate is darker than the violet one, so it carries a lighter scrim
    and the green actually reads */
+.score.wall::after {
+  background:
+    radial-gradient(48rem 32rem at 94% 2%, rgba(181, 108, 210, 0.32), transparent 62%),
+    radial-gradient(42rem 30rem at 2% 96%, rgba(72, 167, 155, 0.28), transparent 60%),
+    linear-gradient(180deg, rgba(1, 15, 29, 0.90) 0%, rgba(1, 15, 29, 0.72) 42%, rgba(1, 15, 29, 0.90) 100%);
+}
+.news.wall::after {
+  background:
+    radial-gradient(44rem 30rem at 4% 4%, rgba(72, 167, 155, 0.26), transparent 60%),
+    radial-gradient(40rem 28rem at 98% 90%, rgba(181, 108, 210, 0.24), transparent 62%),
+    linear-gradient(180deg, rgba(1, 15, 29, 0.90) 0%, rgba(1, 15, 29, 0.74) 42%, rgba(1, 15, 29, 0.90) 100%);
+}
+
 .wall-teal .hit,
 .wall-teal h2 span { color: var(--mint); }
 .wall-teal .dl-list a:hover,
@@ -366,7 +379,7 @@ button:focus-visible {
   position: absolute;
   /* anchored to the CONTAINER edge, not the viewport, so his reaching hand
      overlaps the tail of the headline by the same amount at every width */
-  right: max(1rem, calc((100vw - var(--container)) / 2 + 7rem));
+  right: max(1rem, calc((100vw - var(--container)) / 2 + 18.5rem));
   bottom: 0;
   /* size against the space BELOW the fixed chrome, never the whole section,
      or his head ends up behind the nav */
@@ -509,65 +522,74 @@ button:focus-visible {
 .score-lede strong { color: #FFFFFF; }
 
 .scoreboard {
-  background: var(--ink);
-  border-radius: 28px;
-  padding: clamp(2rem, 4.5vw, 3.6rem) clamp(1.5rem, 4.5vw, 3.6rem);
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
   align-items: center;
-  gap: 2rem;
-  position: relative;
-  overflow: hidden;
+  gap: clamp(1.5rem, 4vw, 3rem);
 }
-.scoreboard::after {
+.board {
+  background: linear-gradient(180deg, #0B1826, #040B13);
+  border: 1px solid rgba(181, 108, 210, 0.4);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 6px rgba(1, 15, 29, 0.65),
+    0 34px 80px -30px rgba(181, 108, 210, 0.5);
+}
+.board-head,
+.board-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.3rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--txt-on-ink-muted);
+}
+.board-head { border-bottom: 1px solid rgba(236, 233, 224, 0.12); }
+.board-foot { border-top: 1px solid rgba(236, 233, 224, 0.12); }
+.board-tag { color: var(--mint); }
+.board-foot strong { color: var(--txt-on-ink); font-weight: 700; }
+.board-foot .board-sep { flex: 1; border-top: 1px dashed rgba(236, 233, 224, 0.18); }
+.board-screen {
+  position: relative;
+  padding: clamp(1.4rem, 3vw, 2.4rem) 1.3rem;
+  background: #020710;
+}
+.board-screen::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 1px 1px, rgba(236, 233, 224, 0.05) 1px, transparent 0) 0 0 / 12px 12px;
+  background: radial-gradient(rgba(236, 233, 224, 0.07) 1px, transparent 1.6px) 0 0 / 8px 8px;
   pointer-events: none;
 }
-.scoreboard-label {
-  color: var(--txt-on-ink-muted);
-  font-size: var(--size-small);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 0.8rem;
-}
-.scoreboard-value {
+.board-value {
   font-family: var(--font-display);
-  font-size: clamp(3.6rem, 8.5vw, 7.5rem);
-  line-height: 1;
-  color: var(--txt-on-ink);
-  font-variant-numeric: tabular-nums;
   font-weight: 800;
+  font-size: clamp(3.8rem, 8.5vw, 8rem);
+  line-height: 0.9;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--purple);
+  text-shadow:
+    0 0 16px rgba(181, 108, 210, 0.8),
+    0 0 56px rgba(181, 108, 210, 0.45);
 }
-.scoreboard-value.is-positive { color: var(--teal); }
+.board-value.is-positive {
+  color: var(--mint);
+  text-shadow:
+    0 0 16px rgba(143, 240, 220, 0.8),
+    0 0 56px rgba(72, 167, 155, 0.5);
+}
 .scoreboard-note {
   color: var(--txt-on-ink-muted);
-  max-width: 30ch;
   font-size: var(--size-body);
 }
 .scoreboard-note strong { color: var(--txt-on-ink); }
-
-.score-quote {
-  margin-top: 3.5rem;
-  max-width: 56rem;
-  font-size: var(--size-body-lg);
-  color: var(--txt-on-ink);
-  border: 0;
-}
-.score-quote p { font-weight: 500; }
-.score-quote footer {
-  margin-top: 1rem;
-  color: var(--txt-on-ink-muted);
-  font-size: var(--size-small);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-@media (max-width: 760px) {
+@media (max-width: 860px) {
   .scoreboard { grid-template-columns: 1fr; }
 }
 
@@ -576,6 +598,7 @@ button:focus-visible {
 .keynote {
   background:
     radial-gradient(52rem 34rem at 88% 4%, rgba(36, 36, 84, 0.65), transparent 62%),
+    radial-gradient(40rem 26rem at 4% 96%, rgba(72, 167, 155, 0.16), transparent 60%),
     var(--ink);
   color: var(--txt-on-ink);
   padding: clamp(6rem, 11vw, 10rem) 0;
@@ -929,6 +952,21 @@ button:focus-visible {
 
 /* ---------- Testimonials ---------- */
 
+.raves { position: relative; overflow: hidden; }
+.raves::before {
+  content: "\201D";
+  position: absolute;
+  right: -1rem;
+  bottom: -4rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(16rem, 26vw, 30rem);
+  line-height: 0.72;
+  color: transparent;
+  -webkit-text-stroke: 3px rgba(181, 108, 210, 0.30);
+  text-stroke: 3px rgba(181, 108, 210, 0.30);
+  pointer-events: none;
+}
 .raves {
   background:
     radial-gradient(46rem 32rem at 8% 96%, rgba(117, 42, 147, 0.22), transparent 64%),
@@ -1147,6 +1185,7 @@ button:focus-visible {
   font-size: 0.95rem;
   color: var(--purple);
 }
+.news-card.featured .news-cta { margin-top: 0.9rem; }
 
 @media (max-width: 860px) {
   .news-grid { grid-template-columns: 1fr; }
