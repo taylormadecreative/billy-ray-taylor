@@ -70,7 +70,7 @@ body {
   font-size: var(--size-body);
   line-height: 1.6;
   color: var(--txt);
-  background: var(--paper);
+  background: var(--ink);
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
@@ -210,7 +210,7 @@ button:focus-visible {
 @media (hover: hover) and (pointer: fine) {
   .utility a:hover { color: #FFFFFF; }
 }
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .utility .u-tag { display: none; }
   .utility-inner { justify-content: center; font-size: 0.8rem; }
 }
@@ -299,10 +299,15 @@ button:focus-visible {
     gap: 2rem;
     font-size: 1.4rem;
     transform: translateY(-102%);
-    transition: transform 420ms var(--ease-in-out);
+    visibility: hidden;
+    transition: transform 420ms var(--ease-in-out), visibility 0s linear 420ms;
     z-index: -1;
   }
-  .nav-links.open { transform: translateY(0); }
+  .nav-links.open {
+    transform: translateY(0);
+    visibility: visible;
+    transition: transform 420ms var(--ease-in-out), visibility 0s;
+  }
   .nav-links a:not(.btn) { font-size: 1.5rem; font-weight: 700; }
 }
 
@@ -319,17 +324,14 @@ button:focus-visible {
   background: var(--ink);
   isolation: isolate;
 }
+/* the wall is an empty plate, so it can run full bleed and crop freely */
 .hero-bg {
   position: absolute;
-  top: var(--chrome-h);
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   background-color: var(--ink);
-  background-image: url("../assets/billy-hero-wall.png");
-  background-size: auto 100%;
-  background-position: right bottom;
-  background-repeat: no-repeat;
+  background-image: url("../assets/hero-wall.jpg");
+  background-size: cover;
+  background-position: center;
   z-index: -2;
 }
 .hero-bg::after {
@@ -337,14 +339,32 @@ button:focus-visible {
   position: absolute;
   inset: 0;
   background: linear-gradient(96deg,
-    rgba(1, 15, 29, 0.93) 0%,
-    rgba(1, 15, 29, 0.80) 26%,
-    rgba(1, 15, 29, 0.42) 45%,
-    rgba(1, 15, 29, 0.05) 60%,
-    transparent 74%);
+    rgba(1, 15, 29, 0.92) 0%,
+    rgba(1, 15, 29, 0.80) 24%,
+    rgba(1, 15, 29, 0.46) 42%,
+    rgba(1, 15, 29, 0.10) 58%,
+    rgba(1, 15, 29, 0.04) 100%);
+}
+/* Billy is his own layer, so he can never be cropped by the frame or the chrome */
+.hero-figure {
+  position: absolute;
+  right: clamp(0.5rem, 8vw, 11rem);
+  bottom: 0;
+  /* size against the space BELOW the fixed chrome, never the whole section,
+     or his head ends up behind the nav */
+  height: min(52rem, calc(100% - var(--chrome-h) - 0.75rem));
+  z-index: -1;
+  will-change: transform;
+  pointer-events: none;
+}
+.hero-billy {
+  height: 100%;
+  width: auto;
+  display: block;
+  filter: drop-shadow(-26px 16px 44px rgba(1, 15, 29, 0.6));
 }
 .hero-inner { position: relative; width: 100%; z-index: 1; }
-.hero-copy { max-width: 46rem; }
+.hero-copy { max-width: 47rem; }
 
 .hero-copy .eyebrow {
   font-weight: 700;
@@ -353,9 +373,11 @@ button:focus-visible {
   text-transform: uppercase;
   color: var(--purple);
   margin-bottom: 1.4rem;
+  max-width: 30rem;
+  text-shadow: 0 1px 10px rgba(1, 15, 29, 0.95);
 }
 .hero h1 {
-  font-size: clamp(2.9rem, 6vw, 5.6rem);
+  font-size: clamp(2.9rem, 5.6vw, 5.4rem);
   margin-bottom: 1.7rem;
 }
 .hero h1 span { display: block; }
@@ -367,23 +389,40 @@ button:focus-visible {
 .hero h1 .l2 { color: var(--purple); }
 .hero-sub {
   font-size: var(--size-body-lg);
-  color: rgba(236, 233, 224, 0.86);
-  max-width: 33rem;
+  color: rgba(236, 233, 224, 0.9);
+  max-width: 32rem;
   margin-bottom: 2.3rem;
+  text-shadow: 0 1px 12px rgba(1, 15, 29, 0.9);
 }
 .hero-sub strong { color: #FFFFFF; font-weight: 700; }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 1rem; }
 
 @media (max-width: 900px) {
-  .hero { min-height: 0; padding-bottom: 2.5rem; }
-  .hero-bg { background-size: cover; background-position: 72% top; }
+  .hero {
+    min-height: 0;
+    padding-bottom: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-inner { order: 1; }
+  .hero-figure { order: 2; }
   .hero-bg::after {
     background: linear-gradient(180deg,
-      rgba(1, 15, 29, 0.62) 0%,
-      rgba(1, 15, 29, 0.80) 42%,
-      rgba(1, 15, 29, 0.94) 100%);
+      rgba(1, 15, 29, 0.72) 0%,
+      rgba(1, 15, 29, 0.86) 46%,
+      rgba(1, 15, 29, 0.55) 100%);
   }
-  .hero h1 .l1 { -webkit-text-stroke-width: 1.5px; }
+  .hero-inner { padding-bottom: 2rem; }
+  .hero-figure {
+    position: relative;
+    right: auto;
+    margin: 1.5rem auto 0;
+    height: auto;
+    width: min(78%, 20rem);
+    display: block;
+  }
+  .hero-billy { height: auto; width: 100%; }
+  .hero h1 .l1 { -webkit-text-stroke-width: 1.8px; }
 }
 
 /* ---------- Trusted-by marquee ---------- */
@@ -426,7 +465,8 @@ button:focus-visible {
   to { transform: translateX(-50%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; }
+  .marquee { -webkit-mask-image: none; mask-image: none; }
+  .marquee-track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; row-gap: 2rem; }
   .marquee-track .dup { display: none; }
 }
 
@@ -714,7 +754,8 @@ button:focus-visible {
   object-position: center;
 }
 .stage-bg { z-index: 0; }
-.stage-cut { z-index: 3; pointer-events: none; }
+.stage-cut-wrap { z-index: 3; pointer-events: none; will-change: transform; }
+.stage-cut { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 .stage-type {
   position: absolute;
   inset: 0;
@@ -742,8 +783,9 @@ button:focus-visible {
   letter-spacing: 0.34em;
   text-indent: 0.34em;
   color: transparent;
-  -webkit-text-stroke: clamp(1.5px, 0.26vw, 3.5px) var(--purple);
-  text-stroke: clamp(1.5px, 0.26vw, 3.5px) var(--purple);
+  -webkit-text-stroke: clamp(2px, 0.26vw, 3.5px) var(--purple);
+  text-stroke: clamp(2px, 0.26vw, 3.5px) var(--purple);
+  filter: drop-shadow(0 0 5px rgba(1, 15, 29, 0.9)) drop-shadow(0 1px 2px rgba(1, 15, 29, 0.85));
 }
 .stage-type .st-wide {
   letter-spacing: 0.72em;
@@ -816,7 +858,7 @@ button:focus-visible {
   gap: clamp(2.5rem, 5vw, 5rem);
   align-items: center;
 }
-.about-photo { position: relative; }
+.about-photo { position: relative; z-index: 0; }
 .about-photo img.portrait {
   width: 100%;
   border-radius: 24px;
@@ -838,7 +880,12 @@ button:focus-visible {
 }
 .about p { color: rgba(236, 233, 224, 0.82); max-width: 62ch; margin-bottom: 1.3rem; }
 .about p strong { color: #FFFFFF; }
-.about-sig { height: 4.5rem; width: auto; margin: 1.8rem 0 1.6rem; }
+.about-sig {
+  height: 4.5rem;
+  width: auto;
+  margin: 1.8rem 0 1.6rem;
+  filter: brightness(0) invert(1) opacity(0.92);
+}
 .about-links { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
 
 @media (max-width: 860px) {
@@ -907,6 +954,7 @@ button:focus-visible {
   text-transform: uppercase;
   font-size: clamp(1.9rem, 4.2vw, 3.6rem);
   font-weight: 800;
+  margin-bottom: 1.5rem;
 }
 .rave-head.long {
   font-size: clamp(1.7rem, 3.4vw, 2.9rem);
@@ -1053,7 +1101,7 @@ button:focus-visible {
 .news-card.featured .news-title {
   font-family: var(--font-display);
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 800;
   font-size: clamp(1.5rem, 2.6vw, 2.3rem);
   line-height: 1.02;
 }

@@ -10,7 +10,7 @@
   var navEl = document.querySelector(".nav");
   function setChromeHeight() {
     if (!utility || !navEl) return;
-    var h = Math.ceil(utility.getBoundingClientRect().height + navEl.getBoundingClientRect().height) + 1;
+    var h = Math.ceil(navEl.getBoundingClientRect().bottom) + 1;
     document.documentElement.style.setProperty("--chrome-h", h + "px");
   }
   setChromeHeight();
@@ -125,10 +125,30 @@
   gsap.registerPlugin(ScrollTrigger);
   document.documentElement.classList.add("gsap-ready");
 
-  /* Hero entrance: staggered copy, arch grows, Billy rises */
+  /* Hero entrance */
   gsap.timeline({ defaults: { ease: "power4.out" } })
     .from(".hero-bg", { scale: 1.08, opacity: 0, duration: 1.4, ease: "power2.out" })
-    .from("[data-hero]", { y: 30, opacity: 0, duration: 0.85, stagger: 0.1 }, "-=1.0");
+    .from("[data-hero-figure]", { yPercent: 7, opacity: 0, duration: 1.2, ease: "power3.out" }, "-=1.05")
+    .from("[data-hero]", { y: 30, opacity: 0, duration: 0.85, stagger: 0.1 }, "-=0.95");
+
+  /* Hero figure: drifts on scroll and leans a few pixels toward the cursor.
+     Scroll writes yPercent, the pointer writes x/y, so they never fight. */
+  var heroFigure = document.querySelector("[data-hero-figure]");
+  if (heroFigure) {
+    gsap.to(heroFigure, {
+      yPercent: 8,
+      ease: "none",
+      scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.8 }
+    });
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      var driftX = gsap.quickTo(heroFigure, "x", { duration: 0.9, ease: "power3.out" });
+      var driftY = gsap.quickTo(heroFigure, "y", { duration: 0.9, ease: "power3.out" });
+      window.addEventListener("pointermove", function (e) {
+        driftX((e.clientX / window.innerWidth - 0.5) * -26);
+        driftY((e.clientY / window.innerHeight - 0.5) * -14);
+      }, { passive: true });
+    }
+  }
 
   /* Stage: Billy walks into the spotlight, then the headline drifts up behind him.
      Uses set + to (never from) so a trigger that fails to fire can never leave
@@ -151,6 +171,7 @@
        than GSAP, so a stalled ticker cannot leave the stage blank. */
     setTimeout(function () {
       if (stageTl.progress() > 0) return;
+      if (stageTl.scrollTrigger && stageTl.scrollTrigger.start > window.scrollY + window.innerHeight) return;
       stageTl.kill();
       [stageBilly].concat(lines).forEach(function (el) {
         el.style.opacity = "1";
@@ -164,11 +185,14 @@
       ease: "none",
       scrollTrigger: { trigger: ".stage", start: "top bottom", end: "bottom top", scrub: 0.6 }
     });
-    gsap.to(stageBilly, {
-      yPercent: 3.5,
-      ease: "none",
-      scrollTrigger: { trigger: ".stage", start: "top bottom", end: "bottom top", scrub: 1.2 }
-    });
+    var billyWrap = stageBilly.parentNode.querySelector(".stage-cut-wrap") || stageBilly;
+    if (billyWrap !== stageBilly) {
+      gsap.to(billyWrap, {
+        yPercent: 3.5,
+        ease: "none",
+        scrollTrigger: { trigger: ".stage", start: "top bottom", end: "bottom top", scrub: 1.2 }
+      });
+    }
   }
 
   /* Scoreboard dial: -$38M rolls up to $1B+ */

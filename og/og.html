@@ -20,9 +20,9 @@
   .bg {
     position: absolute;
     inset: 0;
-    background-image: url("../assets/billy-hero-wall.png");
+    background-image: url("../assets/hero-wall.jpg");
     background-size: cover;
-    background-position: 72% center;
+    background-position: center;
   }
   .scrim {
     position: absolute;
@@ -77,6 +77,15 @@
     line-height: 1.45;
   }
   .what strong { color: #FFFFFF; }
+  .billy {
+    position: absolute;
+    right: 40px;
+    bottom: 0;
+    height: 560px;
+    width: auto;
+    z-index: 1;
+    filter: drop-shadow(-18px 10px 34px rgba(1,15,29,0.6));
+  }
   .band {
     position: absolute;
     left: 0; right: 0; bottom: 0;
@@ -96,6 +105,7 @@
 <body>
   <div class="og">
     <div class="bg"></div>
+    <img class="billy" src="../assets/hero-billy.png" alt="">
     <div class="scrim"></div>
     <div class="content">
       <p class="eyebrow">GLOBAL KEYNOTE SPEAKER</p>
