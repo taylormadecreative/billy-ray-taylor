@@ -190,30 +190,45 @@
   gsap.registerPlugin(ScrollTrigger);
   document.documentElement.classList.add("gsap-ready");
 
-  /* Hero entrance */
+  /* Hero: layered parallax. Depth order back to front: wall, motes, Billy, copy.
+     Scroll: far layers linger (positive yPercent), near ones exit faster.
+     Pointer: near layers counter the cursor, far layers follow it, so the
+     differential reads as depth. Each writes different transform props. */
+  gsap.set(".hero-bg", { scale: 1.12 });
   gsap.timeline({ defaults: { ease: "power4.out" } })
-    .from(".hero-bg", { scale: 1.08, opacity: 0, duration: 1.4, ease: "power2.out" })
+    .from(".hero-bg", { scale: 1.2, opacity: 0, duration: 1.4, ease: "power2.out" })
     .from("[data-hero-figure]", { yPercent: 7, opacity: 0, duration: 1.2, ease: "power3.out" }, "-=1.05")
-    .from("[data-hero]", { y: 30, opacity: 0, duration: 0.85, stagger: 0.1 }, "-=0.95");
+    .from("[data-hero]", { y: 30, opacity: 0, duration: 0.85, stagger: 0.1 }, "-=0.95")
+    .from("[data-hero-motes] span", { opacity: 0, duration: 1.2, stagger: 0.06, ease: "power2.out" }, "-=0.8");
 
-  /* Hero figure: drifts on scroll and leans a few pixels toward the cursor.
-     Scroll writes yPercent, the pointer writes x/y, so they never fight. */
   var heroFigure = document.querySelector("[data-hero-figure]");
-  if (heroFigure) {
-    gsap.to(heroFigure, {
-      yPercent: 8,
-      ease: "none",
-      scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.8 }
-    });
+  var heroMotes = document.querySelector("[data-hero-motes]");
+
+  gsap.matchMedia().add("(min-width: 901px)", function () {
+    var scrollScrub = { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.8 };
+    gsap.to(".hero-bg", { yPercent: 9, ease: "none", scrollTrigger: scrollScrub });
+    gsap.to(heroMotes, { yPercent: 16, opacity: 0.2, ease: "none", scrollTrigger: scrollScrub });
+    gsap.to(heroFigure, { yPercent: 4, ease: "none", scrollTrigger: scrollScrub });
+    gsap.to(".hero-copy", { yPercent: -10, opacity: 0.25, ease: "none", scrollTrigger: scrollScrub });
+
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      var driftX = gsap.quickTo(heroFigure, "x", { duration: 0.9, ease: "power3.out" });
-      var driftY = gsap.quickTo(heroFigure, "y", { duration: 0.9, ease: "power3.out" });
+      var toBgX = gsap.quickTo(".hero-bg", "x", { duration: 1.2, ease: "power3.out" });
+      var toBgY = gsap.quickTo(".hero-bg", "y", { duration: 1.2, ease: "power3.out" });
+      var toFigX = gsap.quickTo(heroFigure, "x", { duration: 0.9, ease: "power3.out" });
+      var toFigY = gsap.quickTo(heroFigure, "y", { duration: 0.9, ease: "power3.out" });
+      var toMoteX = gsap.quickTo(heroMotes, "x", { duration: 1.5, ease: "power3.out" });
       window.addEventListener("pointermove", function (e) {
-        driftX((e.clientX / window.innerWidth - 0.5) * -26);
-        driftY((e.clientY / window.innerHeight - 0.5) * -14);
+        var nx = e.clientX / window.innerWidth - 0.5;
+        var ny = e.clientY / window.innerHeight - 0.5;
+        toBgX(nx * 14);
+        toBgY(ny * 8);
+        toFigX(nx * -28);
+        toFigY(ny * -15);
+        toMoteX(nx * -46);
       }, { passive: true });
     }
-  }
+    return function () {};
+  });
 
   /* Stage: Billy walks into the spotlight, then the headline drifts up behind him.
      Uses set + to (never from) so a trigger that fails to fire can never leave
