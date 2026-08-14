@@ -54,6 +54,7 @@
 
   --container: 76rem;
   --utility-h: 2.4rem;
+  --chrome-h: 7.7rem;
   --pad-x: clamp(1.25rem, 4vw, 3rem);
 }
 
@@ -320,7 +321,10 @@ button:focus-visible {
 }
 .hero-bg {
   position: absolute;
-  inset: 0;
+  top: var(--chrome-h);
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-color: var(--ink);
   background-image: url("../assets/billy-hero-wall.png");
   background-size: auto 100%;

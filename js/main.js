@@ -3,6 +3,20 @@
 
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---------- Fixed chrome height ----------
+     The hero photo must start below the black bars or Billy's head, which sits
+     4% into the plate, ends up hidden behind them. Measure rather than assume. */
+  var utility = document.querySelector(".utility");
+  var navEl = document.querySelector(".nav");
+  function setChromeHeight() {
+    if (!utility || !navEl) return;
+    var h = Math.ceil(utility.getBoundingClientRect().height + navEl.getBoundingClientRect().height) + 1;
+    document.documentElement.style.setProperty("--chrome-h", h + "px");
+  }
+  setChromeHeight();
+  window.addEventListener("resize", setChromeHeight, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(setChromeHeight);
+
   /* ---------- Nav ---------- */
   var nav = document.querySelector(".nav");
   var ticking = false;
