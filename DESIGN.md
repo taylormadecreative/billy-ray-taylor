@@ -1,14 +1,29 @@
 # Design system — Billy Ray Taylor speaker site
 
-## Palette (from Billy's existing LinkedXL brand, committed strategy)
-- --ink: #08121E (deep blue-ink, page dark ground; never #000)
-- --ink-2: #0F1D2E (raised dark surface)
-- --paper: #F4F1E8 (warm cream page ground; never #fff)
-- --paper-2: #EAE6DA (recessed cream)
-- --coral: #FF7155 (committed accent: hero arch, CTA band, buttons)
-- --coral-deep: #E4553A (hover)
-- --teal: #48A79B (secondary: links, small marks, the "link" motif)
-- --purple: #B876D9 (EXPRESSED podcast section only, from the show's logo)
+## Palette — LinkedXL brand, exact
+Pulled from linkedxl.com's declared global palette (GeneratePress CSS custom properties), not inferred.
+
+| Token | Value | Their name |
+|---|---|---|
+| --ink | #010F1D | --contrast |
+| --paper | #FBFBF9 | --global-color-8 |
+| --paper-2 | #ECE9E0 | --base |
+| --coral | #FF7155 | --accent |
+| --coral-hover | #FF8461 | --global-color-9 |
+| --teal | #48A79B | --base-2 |
+| --steel | #48749C | --contrast-2 |
+| --purple-deep | #752A93 | --contrast-3 |
+| --purple | #B56CD2 | BT Expressed logo, exact |
+
+Logo marks for reference: navy #00274A, mint #79CDB5, steel #406688.
+
+Derived shades exist only where a brand color fails WCAG on a light ground. Coral is 2.62:1 on paper and teal is 2.79:1, so neither may be used as text on light:
+- --coral-display #BF543F (4.45 on paper) for large display accents on light
+- --coral-deep #A54937 (4.79 on cream) for small coral text on light
+- --steel-text #41678A (4.90 on cream) for links and labels on light
+- --txt-muted #46545F navy-tinted body copy
+
+On dark grounds the brand colors are used raw: coral 7.12, teal 6.69, cream 15.91, purple 5.56.
 
 ## Typography
 - Display: Tanker (Fontshare), all-caps headlines, tight leading (0.92), clamp() fluid.

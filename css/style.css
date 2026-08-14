@@ -39,19 +39,27 @@
 }
 
 :root {
-  --ink: #08121E;
-  --ink-2: #0F1D2E;
-  --ink-3: #16283C;
-  --paper: #F4F1E8;
-  --paper-2: #EAE6DA;
-  --coral: #FF7155;
-  --coral-deep: #E4553A;
-  --teal: #48A79B;
-  --teal-deep: #2E7A70;
-  --purple: #B876D9;
-  --txt: #131E2B;
-  --txt-muted: #57534A;
-  --txt-on-ink: #EFECE2;
+  /* LinkedXL brand tokens, exact (linkedxl.com global palette) */
+  --ink: #010F1D;          /* --contrast   */
+  --paper: #FBFBF9;        /* --global-color-8 */
+  --paper-2: #ECE9E0;      /* --base       */
+  --coral: #FF7155;        /* --accent     */
+  --coral-hover: #FF8461;  /* --global-color-9 */
+  --teal: #48A79B;         /* --base-2     */
+  --steel: #48749C;        /* --contrast-2 */
+  --purple-deep: #752A93;  /* --contrast-3 */
+  --purple: #B56CD2;       /* BT Expressed mark */
+
+  /* shades derived from the brand hues, for contrast on light grounds */
+  --ink-2: #0A1A29;
+  --ink-3: #14293C;
+  --coral-display: #BF543F;
+  --coral-deep: #A54937;
+  --steel-text: #41678A;
+  --purple-hover: #C285DC;
+  --txt: #010F1D;
+  --txt-muted: #46545F;
+  --txt-on-ink: #ECE9E0;
   --txt-on-ink-muted: #9BA6AE;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -92,9 +100,9 @@ body {
 
 main { overflow-x: hidden; width: 100%; max-width: 100%; }
 
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 
-a { color: var(--teal-deep); text-decoration: none; }
+a { color: var(--steel-text); text-decoration: none; }
 
 .container {
   max-width: var(--container);
@@ -140,11 +148,11 @@ section { scroll-margin-top: 6rem; }
 .btn-purple { background: var(--purple); color: var(--ink); }
 
 @media (hover: hover) and (pointer: fine) {
-  .btn-coral:hover { background: var(--coral-deep); }
+  .btn-coral:hover { background: var(--coral-hover); }
   .btn-ink:hover { background: var(--ink-3); }
   .btn-ghost-ink:hover { border-color: var(--ink); background: rgba(8, 18, 30, 0.05); }
   .btn-ghost-paper:hover { border-color: var(--txt-on-ink); background: rgba(239, 236, 226, 0.08); }
-  .btn-purple:hover { background: #C98FE6; }
+  .btn-purple:hover { background: var(--purple-hover); }
 }
 
 .btn:focus-visible,
@@ -185,7 +193,7 @@ button:focus-visible {
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
-.nav-brand em { font-style: normal; color: var(--coral); }
+.nav-brand em { font-style: normal; color: var(--coral-deep); }
 .nav-links {
   display: flex;
   align-items: center;
@@ -267,7 +275,7 @@ button:focus-visible {
   font-size: var(--size-small);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--teal-deep);
+  color: var(--steel-text);
   margin-bottom: 1.4rem;
 }
 .hero h1 {
@@ -276,7 +284,7 @@ button:focus-visible {
   max-width: 68rem;
   margin-bottom: 1.6rem;
 }
-.hero h1 .hit { color: var(--coral); }
+.hero h1 .hit { color: var(--coral-display); }
 .hero-sub {
   font-size: var(--size-body-lg);
   color: var(--txt-muted);
@@ -381,7 +389,7 @@ button:focus-visible {
   max-width: 62rem;
   margin-bottom: 1.8rem;
 }
-.score h2 .hit { color: var(--coral-deep); }
+.score h2 .hit { color: var(--coral-display); }
 .score-lede {
   font-size: var(--size-body-lg);
   color: var(--txt-muted);
@@ -627,7 +635,7 @@ button:focus-visible {
   color: var(--ink);
   margin-bottom: 0.9rem;
 }
-.watch h2 .hit { color: var(--coral-deep); }
+.watch h2 .hit { color: var(--coral-display); }
 .watch-lede { color: var(--txt-muted); font-size: var(--size-body-lg); margin-bottom: 3rem; max-width: 60ch; }
 .video-frame {
   position: relative;
@@ -662,7 +670,7 @@ button:focus-visible {
 }
 .video-play .play-disc svg { width: 34%; margin-left: 6%; fill: var(--ink); }
 @media (hover: hover) and (pointer: fine) {
-  .video-play:hover .play-disc { transform: scale(1.08); background: var(--coral-deep); }
+  .video-play:hover .play-disc { transform: scale(1.08); background: var(--coral-hover); }
 }
 .video-play:active .play-disc { transform: scale(0.95); }
 
@@ -745,7 +753,7 @@ button:focus-visible {
 }
 .raves-arrow svg { width: 1.15rem; fill: currentColor; }
 @media (hover: hover) and (pointer: fine) {
-  .raves-arrow:hover { border-color: var(--coral); background: rgba(255, 113, 85, 0.12); }
+  .raves-arrow:hover { border-color: var(--coral); background: rgba(255, 113, 85, 0.14); }
 }
 .raves-arrow:active { transform: scale(0.94); }
 
@@ -801,7 +809,7 @@ button:focus-visible {
 .book .book-sub {
   font-size: var(--size-body-lg);
   font-weight: 700;
-  color: var(--teal-deep);
+  color: var(--steel-text);
   margin-bottom: 1.6rem;
   max-width: 32rem;
 }
@@ -825,7 +833,9 @@ button:focus-visible {
 /* ---------- Podcast ---------- */
 
 .podcast {
-  background: var(--ink);
+  background:
+    radial-gradient(46rem 30rem at 12% 12%, rgba(117, 42, 147, 0.28), transparent 62%),
+    var(--ink);
   padding: clamp(6rem, 11vw, 10rem) 0;
   color: var(--txt-on-ink);
 }
@@ -900,7 +910,7 @@ button:focus-visible {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--teal-deep);
+  color: var(--steel-text);
 }
 .news-card.featured .news-pub { color: var(--teal); }
 .news-title { font-size: 1.15rem; font-weight: 700; line-height: 1.35; }
