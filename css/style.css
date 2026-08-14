@@ -559,6 +559,7 @@ button:focus-visible {
 .acc-slice.is-open { flex: 3.4; background: var(--ink-3); }
 .acc-slice::before {
   content: attr(data-num);
+  font-weight: 800;
   position: absolute;
   top: -2.2rem;
   right: 0.4rem;
