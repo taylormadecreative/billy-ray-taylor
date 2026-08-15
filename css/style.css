@@ -626,16 +626,18 @@ button:focus-visible {
 
 /* ---------- Trusted-by marquee ---------- */
 
+/* a teal ribbon banded top and bottom by white rules */
 .trust {
-  background:
-    radial-gradient(52rem 22rem at 50% 120%, rgba(72, 167, 155, 0.16), transparent 68%),
-    var(--ink);
+  background: var(--teal);
   padding: 3.5rem 0 3.75rem;
-  border-top: 2px solid var(--teal);
+  border-top: 2px solid var(--paper);
+  border-bottom: 2px solid var(--paper);
 }
 .trust-label {
   text-align: center;
-  color: var(--txt-on-ink-muted);
+  /* teal carries dark type, not light: ink reads 7.3:1 here, the old muted
+     grey would have landed near 1.5:1 */
+  color: var(--ink);
   font-size: var(--size-small);
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -660,7 +662,10 @@ button:focus-visible {
 .marquee-track img {
   height: clamp(2rem, 3vw, 2.6rem);
   width: auto;
-  opacity: 0.75;
+  /* every plate is a white knockout, which all but disappears on teal.
+     Flipping them to black keeps the marks readable on the light band. */
+  filter: brightness(0);
+  opacity: 0.85;
   transition: opacity 250ms ease;
 }
 @media (hover: hover) and (pointer: fine) {
