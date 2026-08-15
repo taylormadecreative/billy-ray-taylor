@@ -279,6 +279,16 @@ button:focus-visible {
   background: #000000;
   transition: box-shadow 250ms ease;
 }
+/* seam guard: paints black upward over any sub-pixel gap to the utility bar */
+.nav::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #000000;
+}
 .nav-inner {
   max-width: var(--container);
   margin-inline: auto;

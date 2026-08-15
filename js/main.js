@@ -10,6 +10,9 @@
   var navEl = document.querySelector(".nav");
   function setChromeHeight() {
     if (!utility || !navEl) return;
+    /* pin the nav to the utility bar's REAL rendered height; the 2.4rem CSS
+       fallback is a fraction short, which opened a see-through seam */
+    document.documentElement.style.setProperty("--utility-h", utility.getBoundingClientRect().height + "px");
     var h = Math.ceil(navEl.getBoundingClientRect().bottom) + 1;
     document.documentElement.style.setProperty("--chrome-h", h + "px");
   }
