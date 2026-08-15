@@ -635,8 +635,8 @@ button:focus-visible {
 }
 .trust-label {
   text-align: center;
-  /* teal carries dark type, not light: ink reads 7.3:1 here, the old muted
-     grey would have landed near 1.5:1 */
+  /* teal carries dark type, not light: ink measures 6.69:1 here, the old muted
+     grey would have landed at 1.16:1 */
   color: var(--ink);
   font-size: var(--size-small);
   font-weight: 700;
@@ -673,6 +673,15 @@ button:focus-visible {
 }
 @keyframes marquee {
   to { transform: translateX(-50%); }
+}
+/* Forced colours repaint the band to Canvas but leave author filters on images
+   alone, so the flip that rescues these white plates on a light canvas erases
+   them on a dark one. Undo it when the forced palette is dark. */
+@media (forced-colors: active) {
+  .marquee-track img { opacity: 1; }
+}
+@media (forced-colors: active) and (prefers-color-scheme: dark) {
+  .marquee-track img { filter: none; }
 }
 /* reduced motion wraps the track instead of scrolling it, which would stack the
    ribbon three rows tall on a phone */
