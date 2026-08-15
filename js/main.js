@@ -188,6 +188,17 @@
   /* ---------- Footer year ---------- */
   document.getElementById("year").textContent = String(new Date().getFullYear());
 
+  /* SMIL drives the stage outlines' colour sweep, and SMIL ignores
+     prefers-reduced-motion. Strip the animate nodes rather than leave motion
+     running for someone who asked for none; that freezes the gradient mid-ramp,
+     it does not clear it. This has to sit ABOVE the GSAP guard below, which
+     returns early under reduced motion and would skip it entirely. */
+  if (reduced) {
+    Array.prototype.forEach.call(document.querySelectorAll(".stage-type animate"), function (node) {
+      node.parentNode.removeChild(node);
+    });
+  }
+
   /* ---------- GSAP ---------- */
   if (reduced || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
   gsap.registerPlugin(ScrollTrigger);
@@ -239,7 +250,8 @@
   var stageType = document.querySelector("[data-stage-type]");
   var stageBilly = document.querySelector("[data-stage-billy]");
   if (stageType && stageBilly) {
-    var lines = gsap.utils.toArray(stageType.querySelectorAll("span"));
+    /* the two outline lines are <svg>, only the solid one is a <span> */
+    var lines = gsap.utils.toArray(stageType.querySelectorAll(".st-out, .st-solid"));
 
     gsap.set(stageBilly, { opacity: 0, yPercent: 9, scale: 0.955, transformOrigin: "50% 100%" });
     gsap.set(lines, { opacity: 0, yPercent: 22 });

@@ -229,6 +229,40 @@ section { scroll-margin-top: 7.5rem; }
   .btn-ghost-paper:hover { border-color: var(--txt-on-ink); background: rgba(236, 233, 224, 0.08); }
 }
 
+/* Booking CTA: a slow teal-to-purple sweep. The gradient rides a pseudo-element
+   translated by transform rather than an animated background-position, so it
+   composites on the GPU instead of repainting the button every frame. The
+   element is twice the button's width and the gradient repeats once per button
+   width, which makes a -50% shift land exactly one period on and loop with no
+   seam. It also sits under .btn-accent:hover, whose background shorthand would
+   otherwise wipe a gradient declared on the button itself. */
+.btn-book {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-book::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: -2px;
+  width: calc(200% + 4px);
+  z-index: -1;
+  background-image: linear-gradient(90deg, var(--teal), var(--purple), var(--teal));
+  background-size: 50% 100%;
+  background-repeat: repeat-x;
+  animation: cta-sweep 7s linear infinite;
+  will-change: transform;
+}
+@keyframes cta-sweep {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* holds one full teal-purple-teal period, so the sweep's look survives */
+  .btn-book::before { animation: none; }
+}
+
 .btn:focus-visible,
 a:focus-visible,
 button:focus-visible {
@@ -1147,7 +1181,9 @@ button:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.04em;
+  /* em here resolved against the PARENT's 17px, not the display type, so the
+     old 0.04em was 0.68px of nothing. vw tracks the type, which is vw-sized. */
+  gap: 1vw;
   padding-top: 10%;
   text-align: center;
   pointer-events: none;
@@ -1158,22 +1194,30 @@ button:focus-visible {
   font-family: var(--font-display);
   font-weight: 800;
   text-transform: uppercase;
-  line-height: 0.82;
+  line-height: 0.95;
   letter-spacing: 0.01em;
 }
+/* The outlines are SVG so the stroke can carry the teal-purple sweep; a
+   -webkit-text-stroke only ever takes a flat colour. font-size still drives
+   everything: 100 user units == 1em, so width and height in em reproduce the
+   type scale the HTML spans had, and the ratios below are the measured ink
+   extents of these exact words (cap height 0.815em). */
 .stage-type .st-out {
   font-size: clamp(2.1rem, 8.4vw, 8rem);
-  letter-spacing: 0.34em;
-  text-indent: 0.34em;
-  color: transparent;
-  -webkit-text-stroke: clamp(2px, 0.26vw, 3.5px) var(--purple);
-  text-stroke: clamp(2px, 0.26vw, 3.5px) var(--purple);
+  display: block;
+  height: 0.815em;
+  overflow: visible;
   filter: drop-shadow(0 0 5px rgba(1, 15, 29, 0.9)) drop-shadow(0 1px 2px rgba(1, 15, 29, 0.85));
 }
-.stage-type .st-wide {
-  letter-spacing: 0.72em;
-  text-indent: 0.72em;
+.stage-type .st-out text {
+  fill: none;
+  stroke-width: clamp(2px, 0.26vw, 3.5px);
+  vector-effect: non-scaling-stroke;
+  font-family: var(--font-display);
+  font-weight: 800;
 }
+.stage-type .st-wide { width: 5.205em; }
+.stage-type .st-narrow { width: 6.02em; }
 .stage-type .st-solid {
   font-size: clamp(3rem, 12.6vw, 12.2rem);
   color: var(--txt-on-ink);

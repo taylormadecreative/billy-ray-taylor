@@ -73,7 +73,7 @@
         <li><a href="#book">The Book</a></li>
         <li><a href="#news">News</a></li>
         <li><a href="#downloads">For Planners</a></li>
-        <li><a class="btn btn-accent" href="#book-billy">Book Billy</a></li>
+        <li><a class="btn btn-accent btn-book" href="#book-billy">Book Billy</a></li>
       </ul>
     </div>
   </header>
@@ -96,7 +96,7 @@
           <h1 class="display" data-hero><span class="l1">Winning isn't luck.</span><span class="l2">It's a system.</span></h1>
           <p class="hero-sub" data-hero>Billy Ray Taylor helped swing Goodyear's earnings from a <strong>$38 million loss to over $1 billion</strong>. Now he brings the playbook, and the energy, to your stage.</p>
           <div class="hero-ctas" data-hero>
-            <a class="btn btn-accent" href="#book-billy">Book Billy to Speak</a>
+            <a class="btn btn-accent btn-book" href="#book-billy">Book Billy to Speak</a>
             <a class="btn btn-ghost-paper" href="#watch">Watch the Video</a>
           </div>
         </div>
@@ -192,7 +192,7 @@
           <p class="keynote-sub">Defining, aligning, and executing winning strategies at every level of your organization.</p>
           <p class="keynote-book">Based on the book <a href="#book">The Winning Link</a></p>
           <div class="keynote-ctas">
-            <a class="btn btn-accent" href="#book-billy">Book This Keynote</a>
+            <a class="btn btn-accent btn-book" href="#book-billy">Book This Keynote</a>
             <a class="btn btn-ghost-paper" href="https://drive.google.com/file/d/1OjrxF4zcaC8TSn_XVPp2FyBtnIzWFsbc/view?usp=drive_link" target="_blank" rel="noopener">Download Keynote Details</a>
           </div>
           <div class="keynote-links" aria-hidden="true">
@@ -267,9 +267,34 @@
       <div class="stage">
         <img class="stage-layer stage-bg" src="assets/bt-stage-bg.jpg" alt="" aria-hidden="true" width="1987" height="1118">
         <div class="stage-type" data-stage-type aria-hidden="true">
-          <span class="st-out st-wide">Watch</span>
+          <!-- Outlines are SVG because a gradient cannot ride -webkit-text-stroke.
+               100 user units = 1em, so the em-based width/height below scale with
+               the same font-size clamp the HTML type used. -->
+          <svg class="st-out st-wide" viewBox="0 0 520.5 81.5" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="stSweepA" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="0" y1="0" x2="520.5" y2="0">
+                <stop offset="0" stop-color="#48A79B"/>
+                <stop offset="0.5" stop-color="#B56CD2"/>
+                <stop offset="1" stop-color="#48A79B"/>
+                <animate attributeName="x1" from="0" to="520.5" dur="7s" repeatCount="indefinite"/>
+                <animate attributeName="x2" from="520.5" to="1041" dur="7s" repeatCount="indefinite"/>
+              </linearGradient>
+            </defs>
+            <text x="-2" y="81.5" font-size="100" letter-spacing="72" stroke="url(#stSweepA)">WATCH</text>
+          </svg>
           <span class="st-solid">Billy Ray Taylor</span>
-          <span class="st-out">In Action</span>
+          <svg class="st-out st-narrow" viewBox="0 0 602 81.5" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="stSweepB" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="0" y1="0" x2="602" y2="0">
+                <stop offset="0" stop-color="#48A79B"/>
+                <stop offset="0.5" stop-color="#B56CD2"/>
+                <stop offset="1" stop-color="#48A79B"/>
+                <animate attributeName="x1" from="0" to="602" dur="7s" repeatCount="indefinite"/>
+                <animate attributeName="x2" from="602" to="1204" dur="7s" repeatCount="indefinite"/>
+              </linearGradient>
+            </defs>
+            <text x="-2" y="81.5" font-size="100" letter-spacing="34" stroke="url(#stSweepB)">IN ACTION</text>
+          </svg>
         </div>
         <div class="stage-layer stage-cut-wrap"><img class="stage-cut" data-stage-billy src="assets/bt-billy.png" alt="Billy Ray Taylor walking the stage under a spotlight" width="1987" height="1118"></div>
         <div class="stage-ui">
