@@ -530,9 +530,9 @@ button:focus-visible {
 
 @media (max-width: 900px) {
   .hero {
-    min-height: 100svh;
-    padding-top: calc(var(--chrome-h) + 1.1rem);
-    padding-bottom: 0;
+    min-height: 0;
+    padding-top: calc(var(--chrome-h) + 0.7rem);
+    padding-bottom: 0.9rem;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
@@ -546,48 +546,82 @@ button:focus-visible {
   .hero-inner { order: 1; }
   .hero-copy { max-width: none; }
   .hero-copy .eyebrow {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     letter-spacing: 0.12em;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
     max-width: none;
   }
-  .hero h1 { font-size: clamp(2.1rem, 10.5vw, 3rem); margin-bottom: 1rem; }
+  /* sized so line one runs far enough right that his head lands on its tail —
+     in the reference he eats the closing period, and that bite is the point */
+  .hero h1 { font-size: clamp(2rem, 11.4vw, 3.2rem); margin-bottom: 0.7rem; }
   .hero h1 .l1 { -webkit-text-stroke-width: 1.6px; }
   .hero h1 .l2 { margin-top: 0.08em; }
-  .hero-sub { font-size: 0.99rem; margin-bottom: 1.3rem; max-width: 36rem; }
-  .hero-ctas { gap: 0.6rem; }
+  /* every rem below the headline pushes his head down off it, so the stack
+     under the headline stays tight on purpose */
+  .hero-sub { font-size: 0.9rem; line-height: 1.45; margin-bottom: 0.85rem; }
+  .hero-ctas { gap: 0.45rem; }
   .hero-ctas .btn {
-    padding: 0.85rem 1.1rem;
-    font-size: 0.9rem;
+    padding: 0.68rem 1rem;
+    font-size: 0.85rem;
     flex: 1 1 auto;
     justify-content: center;
     white-space: nowrap;
   }
-  /* Billy owns the rest of the first viewport */
+  /* Billy stands at the right and masks the tail of the headline, the way he
+     does on desktop. His WIDTH is the fixed dial, not his height: the plate's
+     widest point is his reaching hands, and pinning the width is what keeps
+     them out of the copy channel at every phone size. Height follows from the
+     ratio, and the rhythm below is tuned so his head lands on the headline. */
   .hero-figure {
-    order: 2;
-    position: relative;
-    right: auto;
-    bottom: auto;
+    order: 0;
+    position: absolute;
+    /* head pinned to the headline, feet planted on the section edge: the top
+       offset is what makes him mask the same small bite of line one at every
+       width, instead of the bite swinging with how many lines the copy wraps to */
+    top: calc(var(--chrome-h) + 3.1rem);
+    bottom: 0;
+    /* barely off the edge: his reaching hand ends a hair short of the plate
+       edge, so anything past 2% starts slicing his fingers off */
+    right: -2%;
+    left: auto;
     height: auto;
-    width: min(72%, 19rem);
-    margin: 0.6rem auto 0;
-    margin-top: auto;
+    width: auto;
+    margin: 0;
     display: block;
-    flex: 1 1 auto;
-    min-height: 14rem;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    z-index: 2;
   }
   .hero-billy {
     height: 100%;
-    max-height: 100%;
     width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    object-position: bottom center;
+    max-width: none;
   }
+  /* the copy holds the left channel; only the headline runs under him. His
+     reaching hands are the widest part of the plate and they land exactly at
+     paragraph height, so the channel has to stay clear of them. */
+  .hero-sub { max-width: 56%; }
+  .hero-ctas { max-width: 56%; }
+  .hero-ctas .btn { flex: 1 1 100%; }
+}
+/* Tablets: the copy stack alone is too short to give him any height, so the
+   section gets a floor and the buttons stop stretching to the channel. */
+@media (min-width: 481px) and (max-width: 900px) {
+  .hero { min-height: 36rem; }
+  /* the headline has to reach him or the middle of the frame goes empty */
+  .hero h1 { font-size: clamp(2.8rem, 11.8vw, 6.6rem); }
+  .hero h1 .l1 { -webkit-text-stroke-width: 2px; }
+  /* at this size he can stand inside the frame instead of bleeding off it */
+  .hero-figure { right: 3%; }
+  .hero-sub { max-width: min(30rem, 48%); }
+  .hero-ctas { max-width: min(30rem, 48%); }
+  .hero-ctas .btn { flex: 0 1 auto; }
+}
+/* he stands taller relative to the smallest phones, so the channel yields. The
+   buttons yield furthest: they sit at the height where his trailing hand
+   reaches deepest into the frame, and a clipped pill reads as a broken button. */
+@media (max-width: 400px) {
+  .hero-sub { max-width: 48%; }
+  .hero-ctas { max-width: 44%; }
+  .hero-ctas .btn { padding: 0.62rem 0.8rem; font-size: 0.8rem; }
 }
 
 /* ---------- Trusted-by marquee ---------- */
@@ -597,6 +631,7 @@ button:focus-visible {
     radial-gradient(52rem 22rem at 50% 120%, rgba(72, 167, 155, 0.16), transparent 68%),
     var(--ink);
   padding: 3.5rem 0 3.75rem;
+  border-top: 2px solid var(--teal);
 }
 .trust-label {
   text-align: center;
@@ -633,6 +668,21 @@ button:focus-visible {
 }
 @keyframes marquee {
   to { transform: translateX(-50%); }
+}
+/* reduced motion wraps the track instead of scrolling it, which would stack the
+   ribbon three rows tall on a phone */
+@media (prefers-reduced-motion: reduce) and (max-width: 900px) {
+  .marquee-track { row-gap: 1rem; }
+}
+/* on phones the bar is a thin ribbon under Billy, not a section */
+@media (max-width: 900px) {
+  .trust { padding: 1.35rem 0 1.5rem; }
+  .trust-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    margin-bottom: 1rem;
+  }
+  .marquee-track img { height: 1.6rem; margin-right: 2.6rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .marquee { -webkit-mask-image: none; mask-image: none; }
